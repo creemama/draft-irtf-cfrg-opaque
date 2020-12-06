@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-03T00:44:25.417639+00:00",
+  "timestamp": "2020-12-06T00:49:12.171002+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -1812,7 +1812,7 @@
       "labels": [],
       "body": "in the source there's a commented out part `## Envelope considerations` which mentions that not even `skU` needs to be included in the credentials wrapped in the envelope, instead skU can be derived from `rwd`. there's a note that this part should be \"brought back after updating\". if this is indeed the case, do not forget to change \r\n> Applications MUST include skU in secret_credentials\r\nin the {#protocol-messages} section.",
       "createdAt": "2020-11-16T15:18:02Z",
-      "updatedAt": "2020-12-02T02:22:22Z",
+      "updatedAt": "2020-12-05T18:07:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -1832,9 +1832,37 @@
         {
           "author": "chris-wood",
           "authorAssociation": "COLLABORATOR",
-          "body": "> i think this part makes sense.\r\n\r\nI need to think about this more, though my sense is that the bandwidth saved is not be worth the additional complexity. The original I-D had this to say about the issue:\r\n\r\n```\r\n   Note (storage/communication efficient EnvU): It is possible to\r\n   shorten EnvU by including PubS in ClrEnv and omitting SecEnv and any\r\n   other value from EnvU.  In this case, the user's key PrivU is derived\r\n   from RwdU; e.g., the value PAD in KEYS is used as a seed for a key\r\n   generation procedure that outputs PrivU (the length of PAD will\r\n   depend on the specific key generation procedure).  Such EnvU consists\r\n   of Nonce, PubS and the HMAC value, resulting in less storage at the\r\n   server and less communication from server to client.  The server can\r\n   further minimize storage space by deriving per-user OPRF keys kU from\r\n   a single global secret key using a PRF, and it can use the same pair\r\n   (PrivS,PubS) for all its users.  In this case, the per-user OPAQUE\r\n   storage consists of Nonce, PubU and HMAC(Khmac; PubS).  While it may\r\n   be \"tempting\" to omit Nonce for space savings, this can lead to\r\n   vulnerabilities (see below).\r\n```\r\n\r\n@hugokraw, what do you think?",
+          "body": "> i think this part makes sense.\r\n\r\nI need to think about this more, though my sense is that the bandwidth saved is not worth the additional complexity. The original I-D had this to say about the issue:\r\n\r\n```\r\n   Note (storage/communication efficient EnvU): It is possible to\r\n   shorten EnvU by including PubS in ClrEnv and omitting SecEnv and any\r\n   other value from EnvU.  In this case, the user's key PrivU is derived\r\n   from RwdU; e.g., the value PAD in KEYS is used as a seed for a key\r\n   generation procedure that outputs PrivU (the length of PAD will\r\n   depend on the specific key generation procedure).  Such EnvU consists\r\n   of Nonce, PubS and the HMAC value, resulting in less storage at the\r\n   server and less communication from server to client.  The server can\r\n   further minimize storage space by deriving per-user OPRF keys kU from\r\n   a single global secret key using a PRF, and it can use the same pair\r\n   (PrivS,PubS) for all its users.  In this case, the per-user OPAQUE\r\n   storage consists of Nonce, PubU and HMAC(Khmac; PubS).  While it may\r\n   be \"tempting\" to omit Nonce for space savings, this can lead to\r\n   vulnerabilities (see below).\r\n```\r\n\r\n@hugokraw, what do you think?",
           "createdAt": "2020-12-02T02:22:22Z",
-          "updatedAt": "2020-12-02T02:22:22Z"
+          "updatedAt": "2020-12-03T05:07:14Z"
+        },
+        {
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I am sure that there are cases where such a savings will be meaningful and I am sure it will not be the typical case; I can't say much more than that. Frankly, the main reason I wanted to \"document\" this option is that in Bjorn Hasse's AuCPace paper, the amount of storage and/or communication was the only aspect on which AuCPace had some performance advantage. That paper compared against a very wasteful interpretation of what OPAQUE needed and I wanted to document the fact that one can actually be very minimal in envelope's size. I would prefer to make progress with the specification without entering this level of optimization but if there are potential users of OPAQUE for which these savings are important we could at least leave it as a remark. ",
+          "createdAt": "2020-12-03T04:47:30Z",
+          "updatedAt": "2020-12-03T04:47:30Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Is there a systematic / standardized way to generate a private key from a sequence of random bytes (RwdU), for all of the keypair types that we want to support?\r\n\r\nIf so, then I think it would be great to incorporate this optimization into our specification, especially since this will affect how test vectors are generated.\r\n\r\nIf not, then I think we are better off not addressing this optimization, unless there are compelling reasons for practictioners to minimize the extra 32 bytes that are being used for encoding skU.",
+          "createdAt": "2020-12-04T01:09:01Z",
+          "updatedAt": "2020-12-04T01:09:01Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Is there a systematic / standardized way to generate a private key from a sequence of random bytes (RwdU), for all of the keypair types that we want to support?\r\n\r\nIt depends on the key pair. HPKE [defines specifies a couple derivation functions](https://cfrg.github.io/draft-irtf-cfrg-hpke/draft-irtf-cfrg-hpke.html#name-derivekeypair) for popular groups. But this isn't exhaustive. Right now, I'm leaning towards not including this optimization, but perhaps this is also something we should bring up to the list. ",
+          "createdAt": "2020-12-04T01:15:21Z",
+          "updatedAt": "2020-12-04T01:15:21Z"
+        },
+        {
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Is there a systematic / standardized way to generate a private key from a sequence of random bytes (RwdU), for all of the keypair types that we want to support?\r\n\r\nThe universal way is to assume that the key generation procedure works on a string of random bits as input and therefore you can always produce that number of bits out of the RO applied to rwdU. This is simple for the case of EC keys but would not be so simple for an RSA private key (which requires sampling prime numbers).",
+          "createdAt": "2020-12-05T18:07:22Z",
+          "updatedAt": "2020-12-05T18:07:22Z"
         }
       ]
     },
@@ -1950,7 +1978,7 @@
       "labels": [],
       "body": "Just as we dropped the ProtocolMessages part, for the protocol it might be not necessary to call the function StoreUserRecord. For instance my implementation does not care about any kind of persistence or transport of the outcome of the protocol. It might be that the use-case does not need the storage of the user record, for example by just keeping it in memory, or the record might be further processed before storage. Thus i propose to rename the function to `FinalizeUserRecord` instead.",
       "createdAt": "2020-11-21T21:50:54Z",
-      "updatedAt": "2020-12-02T03:14:32Z",
+      "updatedAt": "2020-12-03T05:09:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -1969,7 +1997,7 @@
         },
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "Somewhat unrelated question, but:\r\n\r\nShould this specification define a format for the serialized version of the \"finalized object\" containing (envU, pkS, skS, pkU, kU)? Something like:\r\n```\r\nCredentialRecord {\r\n  opaque envU<1..2^16-1>;\r\n  opaque kU<1..2^16-1>;\r\n  opaque pkU<1..2^16-1>;\r\n}\r\n```\r\n\r\nAnd actually pkS does not need to be stored here, because it is already a part of the credentials object, via:\r\n\r\n\"Applications MUST include skU in secret_credentials and pkS in either cleartext_credentials or secret_credentials.\"\r\n\r\nAnd we likely do not want to advocate for storing skS somewhere like this, so we can retain/amend the comment:\r\n\r\n\"If skS and pkS are used for multiple users, the server can store these values separately and omit them from the user's record.\"",
           "createdAt": "2020-12-02T02:23:10Z",
           "updatedAt": "2020-12-02T02:23:10Z"
@@ -1980,6 +2008,48 @@
           "body": "Great question, @kevinlewi. Over in HPKE we chose to not specify storage wire formats, since they were primarily an implementation detail. That came back to haunt us when we needed to send serialized HPKE contexts between processes. So my sense is that this might be useful if we anticipate a use case where we would need to move these records around between different OPAQUE implementations. Otherwise, I think we ought to leave it to the wrapper protocol and application. ",
           "createdAt": "2020-12-02T03:14:32Z",
           "updatedAt": "2020-12-02T03:14:32Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think it would be something that OPAQUE implementations would have to implement, and not leave to their wrapper protocols, since: what is a wrapper protocol expected to do with envU, kU, pkU other than treat them as raw bytestrings that should be serialized in some format?\r\n\r\nSo, if it's likely the case that OPAQUE protocols will be implementing the serialization in their own manner, I think it would be nice if we define a standard way to organize envU, kU, pkU. But this does raise other questions... should we include a version byte in this serialization?",
+          "createdAt": "2020-12-03T03:52:57Z",
+          "updatedAt": "2020-12-03T03:53:49Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> what is a wrapper protocol expected to do with envU, kU, pkU other than treat them as raw bytestrings that should be serialized in some format?\r\n\r\nIf these were serialized and minted by implementation A, then implementation A would presumably know how to parse them. I think this is useful only if, for example, implementation A mints the records and implementation B consumes them. I could see that happening in practice if, e.g., the registration and login phases were two separate processes running different implementations, wherein the registration process minted CredentialRecords and then the login process consumed them. If you think arrangements like this are likely, I see no harm in adding something like CredentialRecord.\r\n\r\nAs for serialization: yes, we should definitely version them. I'd just stick in the same version used for the protocol version, e.g.:\r\n\r\n~~~\r\nstruct {\r\n   uint16 version;\r\n   uint16 length;\r\n   select (0xff00) { // version 00 for the draft, or whatever\r\n      // information about the configuration, e.g., OPRF suite and so on, since that determines kU's encoding \r\n      Envelope envU;\r\n      Scalar kU;\r\n      opaque pkU<0..2^16-1>;\r\n   }\r\n} CredentialRecord;\r\n~~~",
+          "createdAt": "2020-12-03T04:05:17Z",
+          "updatedAt": "2020-12-03T04:05:28Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Good points, I see. Yes, I think this scenario could be likely, since registration and login may need to be in different languages (for example).\r\n\r\nThe struct looks good, except -- why do we need a `uint16 length;` field? Seemingly that could be omitted.",
+          "createdAt": "2020-12-03T04:18:13Z",
+          "updatedAt": "2020-12-03T04:18:13Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> The struct looks good, except -- why do we need a uint16 length; field? Seemingly that could be omitted.\r\n\r\nImagine one added support for two versions of OPAQUE at the same time, yet the login only knows how to process one specific version. Since the contents of the record depend on the version, there needs to be a way for implementations that don't support a given version to skip over records they cannot parse, and the length field does just that. So for example, an implementation would read the version field and, if it's unsupported, skip `length` bytes to the next record in a list, and repeat. ",
+          "createdAt": "2020-12-03T04:21:27Z",
+          "updatedAt": "2020-12-03T04:21:27Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This would only be a problem if the wrapper protocol stores these records in a contiguous sequence of bytes with no delimiters for the beginnings of each record, though, right?\r\n\r\nI don't imagine that this would ever occur... but perhaps I'm missing something. At the very least, these records would be stored as values of a map, or elements of an array.",
+          "createdAt": "2020-12-03T04:46:12Z",
+          "updatedAt": "2020-12-03T04:46:12Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yep, that's true! If a wrapper chose to store these in a map from idU -> [records], then perhaps this would be relevant. If it has some other (simpler) way to delineate different records, we can certainly omit the length. \r\n\r\n@kevinlewi, would you mind proposing a PR for the record format?",
+          "createdAt": "2020-12-03T05:09:19Z",
+          "updatedAt": "2020-12-03T05:09:19Z"
         }
       ]
     },
@@ -2042,6 +2112,145 @@
       "createdAt": "2020-11-26T21:44:13Z",
       "updatedAt": "2020-12-01T22:21:45Z",
       "closedAt": "2020-12-01T22:21:45Z",
+      "comments": []
+    },
+    {
+      "number": 94,
+      "id": "MDU6SXNzdWU3NTU3ODkzNjE=",
+      "title": "Remove RequestMetadata type",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/94",
+      "state": "CLOSED",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This struct stores the scalar across Request/Finalize calls, which both happen on the client. There's no need to serialize or send this value on the wire anywhere, so we should just defer its representation to the underlying implementation. Given that the OPRF API is already a dependency we expose, I suggest we replace RequestMetadata with the actual type `Scalar`. \r\n\r\nWhile we're in here, we might also consider removing superfluous wrappers around OPRF types (like `RegistrationRequest` and `CredentialRequest`). \r\n\r\n@kevinlewi, what do you think?",
+      "createdAt": "2020-12-03T03:42:32Z",
+      "updatedAt": "2020-12-03T04:14:20Z",
+      "closedAt": "2020-12-03T04:14:20Z",
+      "comments": [
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Sounds good to me. Just to be clear, none of the changes that you are referencing will actually affect the bytes being output by these functions, right? They are just syntactic changes to clean up the presentation if I am understanding correctly.",
+          "createdAt": "2020-12-03T03:48:43Z",
+          "updatedAt": "2020-12-03T03:48:43Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Well, partly. RequestMetadata contains a vector encoding of a scalar (so a serialized scalar prefixed by its length), but that's not really needed. What I'm suggesting is that we just output a scalar, e.g.:\r\n\r\n```\r\nCreateCredentialRequest(pwdU)\r\n\r\nInput:\r\n- pwdU, an opaque byte string containing the user's password\r\n\r\nOutput:\r\n- request, an CredentialRequest structure\r\n- r, an OPRF Scalar value\r\n\r\nSteps:\r\n1. (r, M) = Blind(pwdU)\r\n2. Create CredentialRequest request with M\r\n3. Output (request, r)\r\n```",
+          "createdAt": "2020-12-03T03:52:03Z",
+          "updatedAt": "2020-12-03T03:52:03Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ah, got it. Yes, this makes sense, I believe in my implementation I already omitted the length prefix anyway.",
+          "createdAt": "2020-12-03T03:56:13Z",
+          "updatedAt": "2020-12-03T03:56:13Z"
+        }
+      ]
+    },
+    {
+      "number": 96,
+      "id": "MDU6SXNzdWU3NTY2MTMyNTY=",
+      "title": "Envelope correctness",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/96",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The record sent from client to server during the registration phase is as follows:\r\n\r\n~~~\r\nstruct {\r\n    Envelope envelope;\r\n    opaque pkU<0..2^16-1>;\r\n} RegistrationUpload;\r\n~~~\r\n\r\nAs is, the server has no assurance that the private key corresponding to `pkU` is inside (or derived from) the envelope. This raises two questions:\r\n\r\n1) Does the client need to prove possession of `skU`?\r\n2) If so, how would this work (non-interactively) for DH-based public keys? If not, we should probably add text clarifying why this isn't needed.",
+      "createdAt": "2020-12-03T21:41:04Z",
+      "updatedAt": "2020-12-04T01:13:15Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Although it would be nice if the client could prove possession of `skU`, I don't think it merits the extra complexity / computation that would be required, since I cannot imagine a scenario in which the server would need the assurance that the private key corresponding to `pkU` is inside the envelope. Did you have an example scenario in mind?",
+          "createdAt": "2020-12-04T00:44:10Z",
+          "updatedAt": "2020-12-04T00:44:10Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Nothing comes to mind right now, though I haven't given it much thought. ",
+          "createdAt": "2020-12-04T01:13:15Z",
+          "updatedAt": "2020-12-04T01:13:15Z"
+        }
+      ]
+    },
+    {
+      "number": 97,
+      "id": "MDU6SXNzdWU3NTY3MDY2MTc=",
+      "title": "Defining SerializeExtensions and DeserializeExtensions",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/97",
+      "state": "OPEN",
+      "author": "kevinlewi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From [here](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L444-L446): Don't these functions need to be defined somewhere? At least they should sort the extensions by their type, perhaps in increasing order. It seems defining these in the specification is a requirement to producing compatible test vectors.\r\n\r\ncc: @chris-wood ",
+      "createdAt": "2020-12-04T00:53:48Z",
+      "updatedAt": "2020-12-04T02:11:41Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> At least they should sort the extensions by their type, perhaps in increasing order.\r\n\r\nSorting isn't required, since each extension is identified by its type. That said, adding more detail so their implementation is clear wouldn't hurt.",
+          "createdAt": "2020-12-04T01:18:04Z",
+          "updatedAt": "2020-12-04T01:18:04Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "If one implementation decides to sort the credentials in increasing order, and another decides to sort the credentials in decreasing order, then they will end up with a different HMAC output. Our test vectors will pick some ordering in order to generate the HMAC, and so seemingly this ordering should be spelled out in the specification, right?",
+          "createdAt": "2020-12-04T02:07:44Z",
+          "updatedAt": "2020-12-04T02:07:44Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ah, yeah, good point about different implementations. I\u2019ll draft up a PR for this soon.",
+          "createdAt": "2020-12-04T02:11:40Z",
+          "updatedAt": "2020-12-04T02:11:40Z"
+        }
+      ]
+    },
+    {
+      "number": 98,
+      "id": "MDU6SXNzdWU3NTY3MDk3ODM=",
+      "title": "Removing auth_data from the envelope",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/98",
+      "state": "OPEN",
+      "author": "kevinlewi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I think we should remove the [`auth_data` field](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L455) in the envelope, but still keep it as part of the [HMAC derivation process](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L639-L641). The only reason why this might be set is if it contains a credential that is marked as a member of cleartext_credentials. But in this case, why not just make it a secret_credentials instead?\r\n\r\nThe advantage of cleartext_credentials are only apparent when the credential itself is NOT included in auth_data (and hence does not affect the total size of the envelope).",
+      "createdAt": "2020-12-04T01:02:09Z",
+      "updatedAt": "2020-12-04T01:02:09Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 99,
+      "id": "MDU6SXNzdWU3NTY3MTMzMjc=",
+      "title": "Simplifying the options for the credentials list in the envelope",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/99",
+      "state": "OPEN",
+      "author": "kevinlewi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This issue is related to #87 and #90, in which the complexities of the setting of the envelope have come up.\r\n\r\nOne problem I foresee happening with allowing the server to choose what parameters should be optional, [which go in secret_credentials, which go in cleartext_credentials, etc.](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L438-L442) is that it becomes cumbersome to manage exhaustive test vectors that would test all of the edge cases (combinations of these settings). And if we choose to only provide test vectors for some default setting, we run the risk of an implementation in the wild incorrectly implementing support for a non-default setting that we did not provide test vectors for.\r\n\r\nTo remedy this, one approach we could take would be to allow for only a small (maybe 2?) set of options for organizing the credentials in the envelope. Perhaps a \"base mode\" and a \"custom identifier mode\", and we could spend a single byte to dictate the mode for the envelope (similar to the VOPRF RFC with the byte representing the base mode or verifiable mode). Base mode would be some default, and \"custom identifier mode\" would support a custom idU and idS being included as secret_credentials.\r\n\r\nIf this sounds good, then now we just need to decide what modes we will support, and what each mode will look like.\r\n",
+      "createdAt": "2020-12-04T01:10:53Z",
+      "updatedAt": "2020-12-04T01:10:53Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -5393,6 +5602,128 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 95,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTMxNDM3MjM4",
+      "title": "Remove wrapper RequestMetadata type.",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/95",
+      "state": "MERGED",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #94.\r\n\r\ncc @kevinlewi ",
+      "createdAt": "2020-12-03T03:55:58Z",
+      "updatedAt": "2020-12-03T04:14:20Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "baseRefName": "master",
+      "baseRefOid": "455538b2043587ea9e455e4f64b111a012dacee7",
+      "headRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "headRefName": "caw/remove-metadata-wrapper",
+      "headRefOid": "fe4625c9650c5added4c1b4ea1105707886a6c7b",
+      "closedAt": "2020-12-03T04:14:20Z",
+      "mergedAt": "2020-12-03T04:14:19Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "c4246341b42614facba070e74733cd6391a6bc80"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTQzNDI0OTA0",
+          "commit": {
+            "abbreviatedOid": "ab207c2"
+          },
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-03T03:58:22Z",
+          "updatedAt": "2020-12-03T03:58:23Z",
+          "comments": [
+            {
+              "originalPosition": 198,
+              "body": "\"a RequestMetadata structure\" should be replaced with \"an OPRF Scalar value\"",
+              "createdAt": "2020-12-03T03:58:23Z",
+              "updatedAt": "2020-12-03T04:07:06Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTQzNDI1Mzk1",
+          "commit": {
+            "abbreviatedOid": "ab207c2"
+          },
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-03T03:59:48Z",
+          "updatedAt": "2020-12-03T03:59:48Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "Where is SerializedElement defined? Perhaps a reference to an RFC #?",
+              "createdAt": "2020-12-03T03:59:48Z",
+              "updatedAt": "2020-12-03T04:07:06Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTQzNDI3NDEw",
+          "commit": {
+            "abbreviatedOid": "ab207c2"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-03T04:06:07Z",
+          "updatedAt": "2020-12-03T04:06:07Z",
+          "comments": [
+            {
+              "originalPosition": 198,
+              "body": "Missed this one -- thanks!",
+              "createdAt": "2020-12-03T04:06:07Z",
+              "updatedAt": "2020-12-03T04:07:06Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTQzNDI3ODIy",
+          "commit": {
+            "abbreviatedOid": "fe4625c"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-03T04:07:25Z",
+          "updatedAt": "2020-12-03T04:07:26Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "I clarified that this is an alias for a serialized group element, i.e., output of `Serialize()`.",
+              "createdAt": "2020-12-03T04:07:26Z",
+              "updatedAt": "2020-12-03T04:07:26Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTQzNDI5Mzkz",
+          "commit": {
+            "abbreviatedOid": "fe4625c"
+          },
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good!",
+          "createdAt": "2020-12-03T04:12:18Z",
+          "updatedAt": "2020-12-03T04:12:18Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
