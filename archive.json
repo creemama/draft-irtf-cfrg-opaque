@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-06T00:49:12.171002+00:00",
+  "timestamp": "2020-12-08T00:47:35.853865+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -1812,7 +1812,7 @@
       "labels": [],
       "body": "in the source there's a commented out part `## Envelope considerations` which mentions that not even `skU` needs to be included in the credentials wrapped in the envelope, instead skU can be derived from `rwd`. there's a note that this part should be \"brought back after updating\". if this is indeed the case, do not forget to change \r\n> Applications MUST include skU in secret_credentials\r\nin the {#protocol-messages} section.",
       "createdAt": "2020-11-16T15:18:02Z",
-      "updatedAt": "2020-12-05T18:07:22Z",
+      "updatedAt": "2020-12-06T12:45:21Z",
       "closedAt": null,
       "comments": [
         {
@@ -1863,6 +1863,13 @@
           "body": "> Is there a systematic / standardized way to generate a private key from a sequence of random bytes (RwdU), for all of the keypair types that we want to support?\r\n\r\nThe universal way is to assume that the key generation procedure works on a string of random bits as input and therefore you can always produce that number of bits out of the RO applied to rwdU. This is simple for the case of EC keys but would not be so simple for an RSA private key (which requires sampling prime numbers).",
           "createdAt": "2020-12-05T18:07:22Z",
           "updatedAt": "2020-12-05T18:07:22Z"
+        },
+        {
+          "author": "bytemare",
+          "authorAssociation": "NONE",
+          "body": "Hello,\r\n\r\ncan't rwdu be used as input to h2c's HashToScalar and serve as a private key? (This is how I understood OPAQUE the first time I read about it - as an alternative to a secret key used for the envelope)",
+          "createdAt": "2020-12-06T01:26:05Z",
+          "updatedAt": "2020-12-06T12:45:21Z"
         }
       ]
     },
