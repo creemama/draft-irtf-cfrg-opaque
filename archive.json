@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-08T00:47:35.853865+00:00",
+  "timestamp": "2020-12-10T00:49:01.544366+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -1985,7 +1985,7 @@
       "labels": [],
       "body": "Just as we dropped the ProtocolMessages part, for the protocol it might be not necessary to call the function StoreUserRecord. For instance my implementation does not care about any kind of persistence or transport of the outcome of the protocol. It might be that the use-case does not need the storage of the user record, for example by just keeping it in memory, or the record might be further processed before storage. Thus i propose to rename the function to `FinalizeUserRecord` instead.",
       "createdAt": "2020-11-21T21:50:54Z",
-      "updatedAt": "2020-12-03T05:09:19Z",
+      "updatedAt": "2020-12-08T17:17:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -2057,6 +2057,13 @@
           "body": "Yep, that's true! If a wrapper chose to store these in a map from idU -> [records], then perhaps this would be relevant. If it has some other (simpler) way to delineate different records, we can certainly omit the length. \r\n\r\n@kevinlewi, would you mind proposing a PR for the record format?",
           "createdAt": "2020-12-03T05:09:19Z",
           "updatedAt": "2020-12-03T05:09:19Z"
+        },
+        {
+          "author": "stef",
+          "authorAssociation": "NONE",
+          "body": "i don't know how the hpke storage formats came to haunt you guys, but i would say that since we do not specify protocol message formats, storage formats also do not need to be specified, or if they do, they might be specified in a different rfc, together with wire formats. the question for me, is is this about the cryptographic protocol or the communication/application protocol, and for me, i prefer to stick to the cryptographic protocol only. since the communication/application protocol brings along a lot of stuff as an low level implementer would not like to implement.\r\n\r\ni am also worried about \"variable length\" records, that means complexity, i believe the implementation should know exactly how big a record or any protocol message is, without encoding it in the message. implementing parsing of these things means added complexity, and added complexity means attack surface. it is already worrying that `idU` and `idS` might be free-form strings with random lengths - i would really prefer allowing only uuids/hashes or similar fixed-width strings, that would eliminate variable lengths parsing from fixed configuration setups of opaque.",
+          "createdAt": "2020-12-08T17:17:16Z",
+          "updatedAt": "2020-12-08T17:17:44Z"
         }
       ]
     },
