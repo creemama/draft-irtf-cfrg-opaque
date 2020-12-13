@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-10T00:49:01.544366+00:00",
+  "timestamp": "2020-12-13T00:52:32.772225+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -1584,7 +1584,7 @@
       "labels": [],
       "body": "TLS 1.3 *is* the SIGMA-I instantiation, so I think we should drop this from the OPAQUE document. It's redundant, and will likely cause confusion between people who want to choose between one or the other. \r\n\r\ncc @kevinlewi ",
       "createdAt": "2020-10-28T13:24:01Z",
-      "updatedAt": "2020-12-02T02:37:51Z",
+      "updatedAt": "2020-12-11T19:36:20Z",
       "closedAt": null,
       "comments": [
         {
@@ -1656,6 +1656,13 @@
           "body": "You can produce test vectors that omit all optional fields. Or you can omit these optional fields from the specification as I just wrote in another thread and say in English that such elements may need to be transmitted by applications but we do not specify them as they will be application specific (we do say that they need to be included in the transcript).",
           "createdAt": "2020-10-28T23:10:12Z",
           "updatedAt": "2020-10-28T23:10:12Z"
+        },
+        {
+          "author": "sayrer",
+          "authorAssociation": "NONE",
+          "body": "I saw the message on the list. I don't subscribe, so I'll comment here: a complete OPAQUE-3DH instantiation would be very helpful to me. BTW, the document is getting much easier for me to understand.",
+          "createdAt": "2020-12-11T19:36:20Z",
+          "updatedAt": "2020-12-11T19:36:20Z"
         }
       ]
     },
@@ -1985,7 +1992,7 @@
       "labels": [],
       "body": "Just as we dropped the ProtocolMessages part, for the protocol it might be not necessary to call the function StoreUserRecord. For instance my implementation does not care about any kind of persistence or transport of the outcome of the protocol. It might be that the use-case does not need the storage of the user record, for example by just keeping it in memory, or the record might be further processed before storage. Thus i propose to rename the function to `FinalizeUserRecord` instead.",
       "createdAt": "2020-11-21T21:50:54Z",
-      "updatedAt": "2020-12-08T17:17:44Z",
+      "updatedAt": "2020-12-10T10:54:11Z",
       "closedAt": null,
       "comments": [
         {
@@ -2064,6 +2071,13 @@
           "body": "i don't know how the hpke storage formats came to haunt you guys, but i would say that since we do not specify protocol message formats, storage formats also do not need to be specified, or if they do, they might be specified in a different rfc, together with wire formats. the question for me, is is this about the cryptographic protocol or the communication/application protocol, and for me, i prefer to stick to the cryptographic protocol only. since the communication/application protocol brings along a lot of stuff as an low level implementer would not like to implement.\r\n\r\ni am also worried about \"variable length\" records, that means complexity, i believe the implementation should know exactly how big a record or any protocol message is, without encoding it in the message. implementing parsing of these things means added complexity, and added complexity means attack surface. it is already worrying that `idU` and `idS` might be free-form strings with random lengths - i would really prefer allowing only uuids/hashes or similar fixed-width strings, that would eliminate variable lengths parsing from fixed configuration setups of opaque.",
           "createdAt": "2020-12-08T17:17:16Z",
           "updatedAt": "2020-12-08T17:17:44Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @stef, thanks for the comments on this, I think you bring up good points.\r\n\r\nI agree that we should stick to only specifying the cryptographic protocol. But, to clarify, aren't we already specifying message / wire formats (e.g. the bytes that consist of a RegistrationRequest) in this RFC? I see this as still being part of the cryptographic protocol. The reason being that we want a wrapper protocol to be able to not have to worry about the internals of the OPAQUE implementation, and if we did not specify the message / wire formats, then it must mean that the wrapper protocol would have to be exposed to the specifics behind kU, rwdU, etc. (which in my opinion is undesirable).\r\n\r\nA similar argument I think can be made for why we may want to specify storage formats for the password file. If we do not, then doesn't this mean that the OPAQUE protocol must expose to the wrapper protocol the individual components that make up the password file (pkU, envU, kU), and we would leave it up to the wrapper protocol to decide what to do with these objects? In my opinion, it would feel cleaner to have the OPAQUE protocol dictate how these objects would be serialized together, so that the wrapper protocol need not have to interpret what each of pkU, envU, and kU mean.\r\n\r\n> i am also worried about \"variable length\" records, that means complexity, i believe the implementation should know exactly how big a record or any protocol message is, without encoding it in the message. implementing parsing of these things means added complexity, and added complexity means attack surface.\r\n\r\nI agree with this -- I think one way in which we might hope to simplify things would be to consider the suggestions I made in #99 regarding the simplification of the envelope construction. However, this would still mean that we have a \"custom identifier\" mode, which does not solve the problem of the variable-length `idU` and `idS`. Perhaps we can draft a separate issue to talk specifically about whether or not would be a good idea to enforce fixed-width strings for `idU` and `idS`.",
+          "createdAt": "2020-12-10T10:54:11Z",
+          "updatedAt": "2020-12-10T10:54:11Z"
         }
       ]
     },
@@ -2247,9 +2261,17 @@
       "labels": [],
       "body": "I think we should remove the [`auth_data` field](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L455) in the envelope, but still keep it as part of the [HMAC derivation process](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L639-L641). The only reason why this might be set is if it contains a credential that is marked as a member of cleartext_credentials. But in this case, why not just make it a secret_credentials instead?\r\n\r\nThe advantage of cleartext_credentials are only apparent when the credential itself is NOT included in auth_data (and hence does not affect the total size of the envelope).",
       "createdAt": "2020-12-04T01:02:09Z",
-      "updatedAt": "2020-12-04T01:02:09Z",
+      "updatedAt": "2020-12-10T22:20:19Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think this is a fine idea, but we still need a way for the client to know what values to include in the HMAC computation. Would the server supply, in its CredentialResponse, the list of cleartext_credential types used?",
+          "createdAt": "2020-12-10T22:20:19Z",
+          "updatedAt": "2020-12-10T22:20:19Z"
+        }
+      ]
     },
     {
       "number": 99,
@@ -2263,7 +2285,38 @@
       "labels": [],
       "body": "This issue is related to #87 and #90, in which the complexities of the setting of the envelope have come up.\r\n\r\nOne problem I foresee happening with allowing the server to choose what parameters should be optional, [which go in secret_credentials, which go in cleartext_credentials, etc.](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L438-L442) is that it becomes cumbersome to manage exhaustive test vectors that would test all of the edge cases (combinations of these settings). And if we choose to only provide test vectors for some default setting, we run the risk of an implementation in the wild incorrectly implementing support for a non-default setting that we did not provide test vectors for.\r\n\r\nTo remedy this, one approach we could take would be to allow for only a small (maybe 2?) set of options for organizing the credentials in the envelope. Perhaps a \"base mode\" and a \"custom identifier mode\", and we could spend a single byte to dictate the mode for the envelope (similar to the VOPRF RFC with the byte representing the base mode or verifiable mode). Base mode would be some default, and \"custom identifier mode\" would support a custom idU and idS being included as secret_credentials.\r\n\r\nIf this sounds good, then now we just need to decide what modes we will support, and what each mode will look like.\r\n",
       "createdAt": "2020-12-04T01:10:53Z",
-      "updatedAt": "2020-12-04T01:10:53Z",
+      "updatedAt": "2020-12-10T22:42:11Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I like this idea. Given that the number of credential types is likely quite small, I'm in favor of simplifying things and offering two modes here. For the \"custom identifier mode,\" either idU or idS could be nil, if desired, right? Or would we require that they both non-nil?",
+          "createdAt": "2020-12-10T22:17:59Z",
+          "updatedAt": "2020-12-10T22:17:59Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think we should allow for nil idU and idS, because it is not easy to check/enforce that idU and idS, and even if it were easily checkable, it is still an additional check that the OPAQUE implementation would have to do, which increases complexity.",
+          "createdAt": "2020-12-10T22:42:11Z",
+          "updatedAt": "2020-12-10T22:42:11Z"
+        }
+      ]
+    },
+    {
+      "number": 100,
+      "id": "MDU6SXNzdWU3NjEyNTY1MDI=",
+      "title": "export_keys also need AE with RKR",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/100",
+      "state": "OPEN",
+      "author": "stef",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "since my implementation has been prominently featured in the \"partitioning oracles paper\" i was thinking that the export_key must also only be used with key-committing AE schemes. i think this should be emphasized where export_keys are mentioned in the draft.",
+      "createdAt": "2020-12-10T13:48:07Z",
+      "updatedAt": "2020-12-10T13:48:07Z",
       "closedAt": null,
       "comments": []
     }
