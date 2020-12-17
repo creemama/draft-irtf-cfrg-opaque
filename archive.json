@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-13T00:52:32.772225+00:00",
+  "timestamp": "2020-12-17T00:51:56.801448+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -2185,15 +2185,15 @@
       "id": "MDU6SXNzdWU3NTY2MTMyNTY=",
       "title": "Envelope correctness",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/96",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The record sent from client to server during the registration phase is as follows:\r\n\r\n~~~\r\nstruct {\r\n    Envelope envelope;\r\n    opaque pkU<0..2^16-1>;\r\n} RegistrationUpload;\r\n~~~\r\n\r\nAs is, the server has no assurance that the private key corresponding to `pkU` is inside (or derived from) the envelope. This raises two questions:\r\n\r\n1) Does the client need to prove possession of `skU`?\r\n2) If so, how would this work (non-interactively) for DH-based public keys? If not, we should probably add text clarifying why this isn't needed.",
       "createdAt": "2020-12-03T21:41:04Z",
-      "updatedAt": "2020-12-04T01:13:15Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-16T21:08:12Z",
+      "closedAt": "2020-12-16T21:08:11Z",
       "comments": [
         {
           "author": "kevinlewi",
@@ -2208,6 +2208,13 @@
           "body": "Nothing comes to mind right now, though I haven't given it much thought. ",
           "createdAt": "2020-12-04T01:13:15Z",
           "updatedAt": "2020-12-04T01:13:15Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Let's close this for now. We can re-open if needed later on.",
+          "createdAt": "2020-12-16T21:08:11Z",
+          "updatedAt": "2020-12-16T21:08:11Z"
         }
       ]
     },
@@ -2316,9 +2323,24 @@
       "labels": [],
       "body": "since my implementation has been prominently featured in the \"partitioning oracles paper\" i was thinking that the export_key must also only be used with key-committing AE schemes. i think this should be emphasized where export_keys are mentioned in the draft.",
       "createdAt": "2020-12-10T13:48:07Z",
-      "updatedAt": "2020-12-10T13:48:07Z",
+      "updatedAt": "2020-12-16T21:56:48Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hmm, this is an interesting point. @hugokraw, are there key-committing restrictions for the export key in terms of how it can be used by applications?",
+          "createdAt": "2020-12-16T21:24:14Z",
+          "updatedAt": "2020-12-16T21:24:14Z"
+        },
+        {
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This is a good question but the answer is no. The export key has no special restrictions except for the remark in the {#export-usage} section: _The exporter_key MUST NOT be used in any way before the HMAC value in the envelope is validated._",
+          "createdAt": "2020-12-16T21:56:48Z",
+          "updatedAt": "2020-12-16T21:56:48Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -2751,12 +2773,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/34",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Mostly addressing some minor grammar fixes and typos that I found during my pass.\r\n\r\nI also renamed \"xcript2\", \"xcript3\" to \"transcript2\" and \"transcript3\", feel free to push back on that.\r\n\r\nI noticed also that in some places it is referred to as \"xcript2\" and others it is \"xscript2\", at the very least those should be made consistent.",
       "createdAt": "2020-06-15T08:39:51Z",
-      "updatedAt": "2020-06-15T14:23:28Z",
+      "updatedAt": "2020-12-16T09:54:46Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "b5894704b46ed915abf4d1c98734651caf59bb58",
@@ -3499,12 +3521,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/40",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "We should wrap the Harden() call with an HKDF-Extract call, since there is no guarantee that Harden will output pseudorandom bits\r\n\r\nAlso changed \"exporter key\" to read simply as \"export key\"",
       "createdAt": "2020-07-09T23:08:17Z",
-      "updatedAt": "2020-07-11T00:30:40Z",
+      "updatedAt": "2020-12-16T09:54:45Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "120464d640d093ff99da8d8350766aafb5f28974",
@@ -3520,7 +3542,7 @@
       "comments": [
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "@chris-wood ",
           "createdAt": "2020-07-10T22:35:47Z",
           "updatedAt": "2020-07-10T22:35:47Z"
@@ -3591,12 +3613,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/44",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- secret_types must contain at least skU\r\n- cleartext_types may be empty\r\n\r\nTherefore, lowering the length requirements of these vectors in RegistrationResponse to be 1 and 0, respectively.\r\n\r\nAlso updating my email and adding a close bracket",
       "createdAt": "2020-08-13T00:27:36Z",
-      "updatedAt": "2020-08-20T19:52:47Z",
+      "updatedAt": "2020-12-16T09:54:43Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "e03a8a3e945193567e99424db5bda83f33219fe9",
@@ -4902,12 +4924,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/64",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "I believe the type of the parameter `data` in `CredentialExtension` should be `opaque`, since there is no `CredentialData` defined anywhere.\r\n\r\nAlso updating my affiliation",
       "createdAt": "2020-10-05T02:21:20Z",
-      "updatedAt": "2020-10-19T18:29:41Z",
+      "updatedAt": "2020-12-16T09:54:43Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "3c9462c70a3f2966d0b2ab3cfd8dafc805fae563",
@@ -4944,12 +4966,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/66",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See #62 ",
       "createdAt": "2020-10-19T19:07:37Z",
-      "updatedAt": "2020-10-20T00:47:33Z",
+      "updatedAt": "2020-12-16T09:54:39Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "225bc77bec4a91c86519858ac20671fc6cd82aab",
@@ -5020,12 +5042,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/71",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See #63 ",
       "createdAt": "2020-10-22T01:42:06Z",
-      "updatedAt": "2020-10-23T21:04:21Z",
+      "updatedAt": "2020-12-16T09:54:39Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "550c550ecdc86ce362d613afebad67ce186cae73",
@@ -5062,12 +5084,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/73",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This removes the inclusion of idU from RegistrationRequest and CredentialRequest (see #65)\r\n\r\nI also noticed that the functions `RecoverCredentials` and `FinalizeRequest` should either not take idU, or should take idU, idS, and pkU as parameters. In this PR I simply made RecoverCredentials also take idU as a parameter, but I opened #72 to discuss this further.",
       "createdAt": "2020-10-22T02:33:22Z",
-      "updatedAt": "2020-10-27T22:59:30Z",
+      "updatedAt": "2020-12-16T09:54:37Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "630173e46eaff00862dbb8446aa8a3c0b0bed8d1",
@@ -5083,7 +5105,7 @@
       "comments": [
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "@chris-wood : This should be ready to review",
           "createdAt": "2020-10-27T03:27:32Z",
           "updatedAt": "2020-10-27T03:27:32Z"
@@ -5184,12 +5206,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/80",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This addresses #79 ",
       "createdAt": "2020-11-09T04:22:23Z",
-      "updatedAt": "2020-11-09T16:31:46Z",
+      "updatedAt": "2020-12-16T09:54:37Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "25c0a16c4983d50ae4a75b415651034092ada78b",
@@ -5226,12 +5248,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/81",
       "state": "MERGED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Points mentioned after discussion from #74 \r\n\r\n- Removes the sending of idU in KE1\r\n- Adds clarification text around what idU and idS refers to in the AKE key derivation. By default, they will be taken from the idU and idS specified in the envelope. If they are not specified, then they are taken to be equal to pkU and pkS.\r\n- Also clarify that if pkU is not in the envelope, then it must be computed from skU.",
       "createdAt": "2020-11-10T23:32:21Z",
-      "updatedAt": "2020-11-12T23:32:13Z",
+      "updatedAt": "2020-12-16T09:54:35Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "dd8581b6ac1d884673c017bd3666c6783f70baee",
@@ -5254,7 +5276,7 @@
         },
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "> I am ok with these changes, they reflect the conclusions of our discussion.\r\n> I have a feeling that people will wonder about why are pkU, pkS set as default identities and in what cases they should or should not set different values for idU and idS. Answering these question would require iterating some of the issues discussed in our thread (why identities are needed at all, what's their roles, etc.). Do you think there is some text you could write to explain some of these things and preempt some of the confusion? I would not dare to write such text myself :-)\r\n\r\n@hugokraw Please take a look at the text that I have added to the \"Security Considerations\" section, also copied below:\r\n\r\n```\r\n## User and server identities\r\n\r\nThe user identity (idU) and server identity (idS) are optional parameters\r\nwhich are left to the application to designate as monikers for the client\r\nand server. If the application layer does not supply values for these\r\nparameters, then they will be omitted from the creation of the envelope\r\nduring the registration stage. Furthermore, they will be substituted with\r\nidU = pkU and idS = pkS during the authenticated key exchange stage.\r\n\r\nThe advantage to supplying a custom idU and idS (instead of simply relying\r\non a fallback to pkU and pkS) is that the client can then ensure that any\r\nmappings between idU and pkU (and idS and pkS) are protected by the\r\nauthentication from the envelope. Then, the client can attempt to verify\r\nthat the idU and idS contained in its envelope matches the idU and idS\r\nsupplied by the server.\r\n\r\nHowever, if this extra layer of verification is unnecessary for the\r\napplication, then simply leaving idU and idS unspecified is acceptable.\r\n```\r\n---\r\n\r\nLet me know if you think we should edit this.",
           "createdAt": "2020-11-12T22:17:38Z",
           "updatedAt": "2020-11-12T22:17:38Z"
@@ -5268,7 +5290,7 @@
         },
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "Done. Thanks!",
           "createdAt": "2020-11-12T23:13:24Z",
           "updatedAt": "2020-11-12T23:13:24Z"
