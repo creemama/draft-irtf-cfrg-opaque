@@ -5,10 +5,10 @@
 Network Working Group                                        H. Krawczyk
 Internet-Draft                                       Algorand Foundation
 Intended status: Informational                                   K. Lewi
-Expires: 20 May 2021                                       Novi Research
+Expires: 20 June 2021                                      Novi Research
                                                                C.A. Wood
                                                               Cloudflare
-                                                        16 November 2020
+                                                        17 December 2020
 
 
                   The OPAQUE Asymmetric PAKE Protocol
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 May 2021.
+   This Internet-Draft will expire on 20 June 2021.
 
 Copyright Notice
 
@@ -270,6 +270,7 @@ Table of Contents
    *  Cryptographic hash function:
 
       -  Hash(m): Compute the cryptographic hash of input message "m".
+         The type of the hash is determined by the chosen OPRF group.
 
       -  Nh: The output size of the Hash function.
 
@@ -393,9 +394,10 @@ Table of Contents
    nonce  A unique 32-byte nonce used to protect this Envelope.
 
    ct  Encoding of encrypted and authenticated credential extensions
-      list.
+      list ("secret_credentials").
 
-   auth_data  Encoding of an authenticated credential extensions list.
+   auth_data  Encoding of an authenticated credential extensions list
+      ("cleartext_credentials").
 
    auth_tag  Authentication tag protecting the contents of the envelope.
 
@@ -419,7 +421,7 @@ Table of Contents
    offline, i.e., before the registration phase.  Once complete, the
    registration process proceeds as follows:
 
-    Client (idU, pwdU, skU, pkU)                 Server (skS, pkS)
+         Client (pwdU, skU, pkU)                       Server (skS, pkS)
      -----------------------------------------------------------------
       request, metadata = CreateRegistrationRequest(pwdU)
 
@@ -447,15 +449,13 @@ Table of Contents
        opaque data<1..2^16-1>;
    } RegistrationRequest;
 
-   data  An encoded element in the OPRF group.  See
-      [I-D.irtf-cfrg-voprf] for a description of this encoding.
+   data  An encoded element in the OPRF group.
 
    struct {
        opaque data_blind<1..2^16-1>;
    } RequestMetadata;
 
-   data_blind  An encoded OPRF scalar element.  See
-      [I-D.irtf-cfrg-voprf] for a description of this encoding.
+   data_blind  An encoded OPRF scalar element.
 
    struct {
        opaque data<0..2^16-1>;
@@ -464,8 +464,7 @@ Table of Contents
        CredentialType cleartext_types<0..255>;
    } RegistrationResponse;
 
-   data  An encoded element in the OPRF group.  See
-      [I-D.irtf-cfrg-voprf] for a description of this encoding.
+   data  An encoded element in the OPRF group.
 
    pkS  An encoded public key that will be used for the online
       authenticated key exchange stage.
@@ -496,10 +495,9 @@ Table of Contents
 
    Steps:
    1. (r, M) = Blind(pwdU)
-   2. data = Serialize(M)
-   3. Create RegistrationRequest request with data
-   4. Create RequestMetadata metadata with Serialize(r)
-   5. Output (request, metadata)
+   2. Create RegistrationRequest request with M
+   3. Create RequestMetadata metadata with SerializeScalar(r)
+   4. Output (request, metadata)
 
 3.2.2.2.  CreateRegistrationResponse
 
@@ -521,12 +519,10 @@ Output:
 
 Steps:
 1. (kU, _) = KeyGen()
-2. M = Deserialize(request.data)
-3. Z = Evaluate(kU, M)
-4. data = Z.encode()
-5. Create RegistrationResponse response with
-     (data, pkS, secret_credentials_list, cleartext_credentials_list)
-6. Output (response, kU)
+2. Z = Evaluate(kU, request.data)
+3. Create RegistrationResponse response with
+     (Z, pkS, secret_credentials_list, cleartext_credentials_list)
+4. Output (response, kU)
 
 3.2.2.3.  FinalizeRequest
 
@@ -534,6 +530,7 @@ Steps:
 
  Parameters:
  - params, the MHF parameters established out of band
+ - Nh, the output size of the Hash function
 
  Input:
  - pwdU, an opaque byte string containing the user's password
@@ -547,26 +544,25 @@ Steps:
  - export_key, an additional key
 
  Steps:
- 1. Z = Deserialize(response.data)
- 2. N = Unblind(input.data_blind, Z)
- 3. y = Finalize(pwdU, N, "OPAQUE00")
- 4. rwdU = HKDF-Extract("rwdU", Harden(y, params))
- 5. Create secret_credentials with CredentialExtensions matching that
+ 1. N = Unblind(metadata.data_blind, response.data)
+ 2. y = Finalize(pwdU, N, "OPAQUE00")
+ 3. rwdU = HKDF-Extract("rwdU", Harden(y, params))
+ 4. Create secret_credentials with CredentialExtensions matching that
     contained in response.secret_credentials_list
- 6. Create cleartext_credentials with CredentialExtensions matching that
+ 5. Create cleartext_credentials with CredentialExtensions matching that
     contained in response.cleartext_credentials_list
- 7. pt = SerializeExtensions(secret_credentials)
- 8. nonce = random(32)
- 9. pseudorandom_pad = HKDF-Expand(rwdU, concat(nonce, "Pad"), len(pt))
- 10. auth_key = HKDF-Expand(rwdU, concat(nonce, "AuthKey"), Nh)
- 11. export_key = HKDF-Expand(rwdU, concat(nonce, "ExportKey"), Nh)
- 12. ct = xor(pt, pseudorandom_pad)
- 13. auth_data = SerializeExtensions(cleartext_credentials)
- 14. Create InnerEnvelope contents with (nonce, ct, auth_data)
- 15. t = HMAC(auth_key, contents)
- 16. Create Envelope envU with (contents, t)
- 17. Create RegistrationUpload upload with envelope value (envU, pkU)
- 18. Output (upload, export_key)
+ 6. pt = SerializeExtensions(secret_credentials)
+ 7. nonce = random(32)
+ 8. pseudorandom_pad = HKDF-Expand(rwdU, concat(nonce, "Pad"), len(pt))
+ 9. auth_key = HKDF-Expand(rwdU, concat(nonce, "AuthKey"), Nh)
+ 10. export_key = HKDF-Expand(rwdU, concat(nonce, "ExportKey"), Nh)
+ 11. ct = xor(pt, pseudorandom_pad)
+ 12. auth_data = SerializeExtensions(cleartext_credentials)
+ 13. Create InnerEnvelope contents with (nonce, ct, auth_data)
+ 14. t = HMAC(auth_key, contents)
+ 15. Create Envelope envU with (contents, t)
+ 16. Create RegistrationUpload upload with envelope value (envU, pkU)
+ 17. Output (upload, export_key)
 
    [[RFC editor: please change "OPAQUE00" to the correct RFC identifier
    before publication.]]
@@ -618,14 +614,14 @@ Steps:
    This section describes the message flow, encoding, and helper
    functions used in this stage.
 
- Client (idU, pwdU)                           Server (skS, pkS)
+       Client (pwdU)                       Server (skS, pkS, kU, envU, pkU)
   -----------------------------------------------------------------
    request, metadata = CreateCredentialRequest(pwdU)
 
                                    request
                               ----------------->
 
-         (response, pkU) = CreateCredentialResponse(request)
+                response = CreateCredentialResponse(request, kU, envU, pkU)
 
                                    response
                               <-----------------
@@ -657,16 +653,14 @@ Steps:
       available.  If absent, the server is assumed to have some way of
       ascertaining the client account information out of band.
 
-   data  An encoded element in the OPRF group.  See
-      [I-D.irtf-cfrg-voprf] for a description of this encoding.
+   data  An encoded element in the OPRF group.
 
    struct {
        opaque data<1..2^16-1>;
        Envelope envelope;
    } CredentialResponse;
 
-   data  An encoded element in the OPRF group.  See
-      [I-D.irtf-cfrg-voprf] for a description of this encoding.
+   data  An encoded element in the OPRF group.
 
    envelope  An authenticated encoding of a Credentials structure.
 
@@ -685,29 +679,27 @@ Steps:
 
    Steps:
    1. (r, M) = Blind(pwdU)
-   2. data = Serialize(M)
-   3. Create CredentialRequest request with data
-   4. Create RequestMetadata metadata with Serialize(r)
-   5. Output (request, metadata)
+   2. Create CredentialRequest request with M
+   3. Create RequestMetadata metadata with SerializeScalar(r)
+   4. Output (request, metadata)
 
-3.3.2.2.  CreateCredentialResponse(request)
+3.3.2.2.  CreateCredentialResponse(request, kU, envU, pkU)
 
-   CreateCredentialResponse(request)
+   CreateCredentialResponse(request, kU, envU, pkU)
 
    Input:
    - request, a CredentialRequest structure
+   - kU, OPRF key associated with idU
+   - envU, Envelope associated with idU
+   - pkU, Public key associated with idU
 
    Output:
    - response, a CredentialResponse structure
-   - pkU, public key of the user
 
    Steps:
-   1. (kU, envU, pkU) = LookupUserRecord(request.id)
-   2. M = Deserialize(request.data)
-   3. Z = Evaluate(kU, M)
-   4. data = Z.encode()
-   5. Create CredentialResponse response with (data, envU)
-   6. Output (response, pkU)
+   1. Z = Evaluate(kU, request.data)
+   2. Create CredentialResponse response with (Z, envU)
+   3. Output response
 
 3.3.2.3.  RecoverCredentials(pwdU, metadata, request, response)
 
@@ -715,35 +707,35 @@ RecoverCredentials(pwdU, metadata, request, response)
 
 Parameters:
 - params, the MHF parameters established out of band
+- Nh, the output size of the Hash function
 
 Input:
 - pwdU, an opaque byte string containing the user's password
 - metadata, a RequestMetadata structure
-- request, a RegistrationRequest structure
-- response, a RegistrationResponse structure
+- request, a CredentialRequest structure
+- response, a CredentialResponse structure
 
 Output:
 - C, a Credentials structure
 - export_key, an additional key
 
 Steps:
-1. Z = Deserialize(response.data)
-2. N = Unblind(input.data_blind, Z)
-3. y = Finalize(pwdU, N, "OPAQUE00")
-4. contents = response.envelope.contents
-5. nonce = contents.nonce
-6. ct = contents.ct
-7. rwdU = HKDF-Extract("rwdU", Harden(y, params))
-8. pseudorandom_pad = HKDF-Expand(rwdU, concat(nonce, "Pad"), len(ct))
-9. auth_key = HKDF-Expand(rwdU, concat(nonce, "AuthKey"), Nh)
-10. export_key = HKDF-Expand(rwdU, concat(nonce, "ExportKey"), Nh)
-11. expected_tag = HMAC(auth_key, contents)
-12. If !ct_equal(response.envelope.auth_tag, expected_tag), raise DecryptionError
-13. pt = xor(ct, pseudorandom_pad)
-14. secret_credentials = DeserializeExtensions(pt)
-15. cleartext_credentials = DeserializeExtensions(auth_data)
-16. Create Credentials creds with (secret_credentials, cleartext_credentials)
-17. Output creds, export_key
+1. N = Unblind(metadata.data_blind, response.data)
+2. y = Finalize(pwdU, N, "OPAQUE00")
+3. contents = response.envelope.contents
+4. nonce = contents.nonce
+5. ct = contents.ct
+6. rwdU = HKDF-Extract("rwdU", Harden(y, params))
+7. pseudorandom_pad = HKDF-Expand(rwdU, concat(nonce, "Pad"), len(ct))
+8. auth_key = HKDF-Expand(rwdU, concat(nonce, "AuthKey"), Nh)
+9. export_key = HKDF-Expand(rwdU, concat(nonce, "ExportKey"), Nh)
+10. expected_tag = HMAC(auth_key, contents)
+11. If !ct_equal(response.envelope.auth_tag, expected_tag), raise DecryptionError
+12. pt = xor(ct, pseudorandom_pad)
+13. secret_credentials = DeserializeExtensions(pt)
+14. cleartext_credentials = DeserializeExtensions(auth_data)
+15. Create Credentials creds with (secret_credentials, cleartext_credentials)
+16. Output creds, export_key
 
    [[RFC editor: please change "OPAQUE00" to the correct RFC identifier
    before publication.]]
@@ -757,7 +749,10 @@ Steps:
    structure.
 
    The exporter_key MUST NOT be used in any way before the HMAC value in
-   the envelope is validated.
+   the envelope is validated.  As a result, there are no random-key
+   robustness requirements imposed on the usage of this key.  (See
+   [PartioningOracleAttacks] for more information about this
+   requirement.)
 
 3.5.  AKE Execution and Party Identities
 
@@ -1092,9 +1087,9 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    [I-D.irtf-cfrg-voprf].  The following OPRF ciphersuites supports are
    supported:
 
-   *  OPRF(ristretto255, SHA-256)
+   *  OPRF(ristretto255, SHA-512)
 
-   *  OPRF(decaf448, SHA-256)
+   *  OPRF(decaf448, SHA-512)
 
    *  OPRF(P-256, SHA-256)
 
@@ -1103,7 +1098,8 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    *  OPRF(P-521, SHA-512)
 
    The OPAQUE hash function is that which is associated with the OPRF
-   variant.  For the variants specified here, only SHA-512 is supported.
+   variant.  For the variants specified here, only SHA-512 and SHA-256
+   are supported.
 
    The OPAQUE MHFs include Argon2 [I-D.irtf-cfrg-argon2], scrypt
    [RFC7914], and PBKDF2 [RFC2898] with suitable parameter choices.
@@ -1451,6 +1447,11 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    [OPAQUE]   Jarecki, S., Krawczyk, H., and J. Xu, "OPAQUE: An
               Asymmetric PAKE Protocol Secure Against Pre-Computation
               Attacks", Eurocrypt , 2018.
+
+   [PartioningOracleAttacks]
+              Len, J., Grubbs, P., and T. Ristenpart, "Partitioning
+              Oracle Attacks", n.d.,
+              <https://eprint.iacr.org/2020/1491.pdf>.
 
    [RFC2898]  Kaliski, B., "PKCS #5: Password-Based Cryptography
               Specification Version 2.0", RFC 2898,

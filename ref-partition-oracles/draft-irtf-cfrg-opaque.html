@@ -18,11 +18,11 @@ hide the password from the server, even during password registration.
 This document specifies the core OPAQUE protocol, along with several
 instantiations in different authenticated key exchange protocols. 
     " name="description">
-<meta content="xml2rfc 3.2.1" name="generator">
+<meta content="xml2rfc 3.5.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-irtf-cfrg-opaque-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.2.1
+  xml2rfc 3.5.0
     Python 3.8.5
     appdirs 1.4.4
     ConfigArgParse 1.2.3
@@ -827,11 +827,11 @@ address div.right {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OPAQUE</td>
-<td class="right">November 2020</td>
+<td class="right">December 2020</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Krawczyk, et al.</td>
-<td class="center">Expires 20 May 2021</td>
+<td class="center">Expires 20 June 2021</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -844,12 +844,12 @@ address div.right {
 <dd class="internet-draft">draft-irtf-cfrg-opaque-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-11-16" class="published">16 November 2020</time>
+<time datetime="2020-12-17" class="published">17 December 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2021-05-20">20 May 2021</time></dd>
+<dd class="expires"><time datetime="2021-06-20">20 June 2021</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -906,7 +906,7 @@ instantiations in different authenticated key exchange protocols.<a href="#secti
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 May 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 20 June 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -934,137 +934,137 @@ instantiations in different authenticated key exchange protocols.<a href="#secti
         <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
 <a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
         </h2>
-<nav class="toc"><ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.1">
+<nav class="toc"><ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-toc.1-1.1.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.1.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.1.2.1">
                 <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-requirements-notation" class="xref">Requirements Notation</a><a href="#section-toc.1-1.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.1.2.2">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.1.2.2">
                 <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="xref">1.2</a>.  <a href="#name-notation" class="xref">Notation</a><a href="#section-toc.1-1.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.2">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.2">
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-cryptographic-protocol-and-" class="xref">Cryptographic Protocol and Algorithm Dependencies</a><a href="#section-toc.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.3">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-core-protocol" class="xref">Core Protocol</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.3.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-data-types" class="xref">Data types</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.3.2.2">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-offline-registration-stage" class="xref">Offline registration stage</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.3.2.2.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.3.2.2.2.1">
                     <p id="section-toc.1-1.3.2.2.2.1.1"><a href="#section-3.2.1" class="xref">3.2.1</a>.  <a href="#name-registration-messages" class="xref">Registration messages</a><a href="#section-toc.1-1.3.2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="ulEmpty toc compact" id="section-toc.1-1.3.2.2.2.2">
+                  <li class="toc ulEmpty compact" id="section-toc.1-1.3.2.2.2.2">
                     <p id="section-toc.1-1.3.2.2.2.2.1"><a href="#section-3.2.2" class="xref">3.2.2</a>.  <a href="#name-registration-functions" class="xref">Registration functions</a><a href="#section-toc.1-1.3.2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.3.2.3">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-online-authenticated-key-ex" class="xref">Online authenticated key exchange stage</a><a href="#section-toc.1-1.3.2.3.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.3.2.3.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.3.2.3.2.1">
                     <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="xref">3.3.1</a>.  <a href="#name-authenticated-key-exchange-" class="xref">Authenticated key exchange messages</a><a href="#section-toc.1-1.3.2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="ulEmpty toc compact" id="section-toc.1-1.3.2.3.2.2">
+                  <li class="toc ulEmpty compact" id="section-toc.1-1.3.2.3.2.2">
                     <p id="section-toc.1-1.3.2.3.2.2.1"><a href="#section-3.3.2" class="xref">3.3.2</a>.  <a href="#name-authenticated-key-exchange-f" class="xref">Authenticated key exchange functions</a><a href="#section-toc.1-1.3.2.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.3.2.4">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.3.2.4">
                 <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="xref">3.4</a>.  <a href="#name-export-key" class="xref">Export Key</a><a href="#section-toc.1-1.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.3.2.5">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.3.2.5">
                 <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="xref">3.5</a>.  <a href="#name-ake-execution-and-party-ide" class="xref">AKE Execution and Party Identities</a><a href="#section-toc.1-1.3.2.5.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.4">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-authenticated-key-exchange-p" class="xref">Authenticated Key Exchange Protocol Instantiations</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.4.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-key-schedule-utility-functi" class="xref">Key Schedule Utility Functions</a><a href="#section-toc.1-1.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.2">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.4.2.2">
                 <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-instantiation-with-hmqv-and" class="xref">Instantiation with HMQV and 3DH</a><a href="#section-toc.1-1.4.2.2.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.4.2.2.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.4.2.2.2.1">
                     <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="xref">4.2.1</a>.  <a href="#name-hmqv-and-3dh-protocol-messa" class="xref">HMQV and 3DH protocol messages</a><a href="#section-toc.1-1.4.2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.2.2.2">
+                  <li class="toc ulEmpty compact" id="section-toc.1-1.4.2.2.2.2">
                     <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="xref">4.2.2</a>.  <a href="#name-hmqv-and-3dh-key-derivation" class="xref">HMQV and 3DH key derivation</a><a href="#section-toc.1-1.4.2.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.3">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.4.2.3">
                 <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-instantiation-with-sigma-i" class="xref">Instantiation with SIGMA-I</a><a href="#section-toc.1-1.4.2.3.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.4.2.3.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.4.2.3.2.1">
                     <p id="section-toc.1-1.4.2.3.2.1.1"><a href="#section-4.3.1" class="xref">4.3.1</a>.  <a href="#name-sigma-protocol-messages" class="xref">SIGMA protocol messages</a><a href="#section-toc.1-1.4.2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="ulEmpty toc compact" id="section-toc.1-1.4.2.3.2.2">
+                  <li class="toc ulEmpty compact" id="section-toc.1-1.4.2.3.2.2">
                     <p id="section-toc.1-1.4.2.3.2.2.1"><a href="#section-4.3.2" class="xref">4.3.2</a>.  <a href="#name-sigma-key-derivation" class="xref">SIGMA key derivation</a><a href="#section-toc.1-1.4.2.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.5">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-configurations" class="xref">Configurations</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.6">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.6.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-configuration-choice" class="xref">Configuration Choice</a><a href="#section-toc.1-1.6.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.6.2.2">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.6.2.2">
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-static-diffie-hellman-oracl" class="xref">Static Diffie-Hellman Oracles</a><a href="#section-toc.1-1.6.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.6.2.3">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.6.2.3">
                 <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="xref">6.3</a>.  <a href="#name-input-validation" class="xref">Input validation</a><a href="#section-toc.1-1.6.2.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.6.2.4">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.6.2.4">
                 <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="xref">6.4</a>.  <a href="#name-user-authentication-versus-" class="xref">User authentication versus Authenticated Key Exchange</a><a href="#section-toc.1-1.6.2.4.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.6.2.5">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.6.2.5">
                 <p id="section-toc.1-1.6.2.5.1"><a href="#section-6.5" class="xref">6.5</a>.  <a href="#name-oprf-hardening" class="xref">OPRF Hardening</a><a href="#section-toc.1-1.6.2.5.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.6.2.6">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.6.2.6">
                 <p id="section-toc.1-1.6.2.6.1"><a href="#section-6.6" class="xref">6.6</a>.  <a href="#name-user-and-server-identities" class="xref">User and server identities</a><a href="#section-toc.1-1.6.2.6.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.6.2.7">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.6.2.7">
                 <p id="section-toc.1-1.6.2.7.1"><a href="#section-6.7" class="xref">6.7</a>.  <a href="#name-user-enumeration" class="xref">User enumeration</a><a href="#section-toc.1-1.6.2.7.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.6.2.8">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.6.2.8">
                 <p id="section-toc.1-1.6.2.8.1"><a href="#section-6.8" class="xref">6.8</a>.  <a href="#name-password-salt-and-storage-i" class="xref">Password salt and storage implications</a><a href="#section-toc.1-1.6.2.8.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.7">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.8">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-references" class="xref">References</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
-<ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.8.2.1">
+<ul class="toc ulEmpty compact">
+<li class="toc ulEmpty compact" id="section-toc.1-1.8.2.1">
                 <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="xref">8.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-toc.1-1.8.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.8.2.2">
+              <li class="toc ulEmpty compact" id="section-toc.1-1.8.2.2">
                 <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="xref">8.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a><a href="#section-toc.1-1.8.2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.9">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.9">
             <p id="section-toc.1-1.9.1"><a href="#section-appendix.a" class="xref">Appendix A</a>.  <a href="#name-acknowledgments" class="xref">Acknowledgments</a><a href="#section-toc.1-1.9.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="ulEmpty toc compact" id="section-toc.1-1.10">
+          <li class="toc ulEmpty compact" id="section-toc.1-1.10">
             <p id="section-toc.1-1.10.1"><a href="#section-appendix.b" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-toc.1-1.10.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
@@ -1238,7 +1238,8 @@ of Serialize, i.e., <code>x = Deserialize(Serialize(x))</code>.<a href="#section
         <li class="normal" id="section-2-2.2">
           <p id="section-2-2.2.1">Cryptographic hash function:<a href="#section-2-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-2.2.2.1">Hash(m): Compute the cryptographic hash of input message "m".<a href="#section-2-2.2.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-2-2.2.2.1">Hash(m): Compute the cryptographic hash of input message <code>m</code>. The type of the
+hash is determined by the chosen OPRF group.<a href="#section-2-2.2.2.1" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-2-2.2.2.2">Nh: The output size of the Hash function.<a href="#section-2-2.2.2.2" class="pilcrow">¶</a>
 </li>
@@ -1332,14 +1333,16 @@ struct {
 </pre><a href="#section-3.1-5" class="pilcrow">¶</a>
 </div>
 <span class="break"></span><dl class="dlParallel" id="section-3.1-6">
-          <dt id="section-3.1-6.1">secret_credentials</dt>
+          <dt id="section-3.1-6.1">
+secret_credentials  </dt>
           <dd style="margin-left: 1.5em" id="section-3.1-6.2">
-  OPAQUE credentials which require secrecy and authentication.<a href="#section-3.1-6.2" class="pilcrow">¶</a>
+            <p id="section-3.1-6.2.1">OPAQUE credentials which require secrecy and authentication.<a href="#section-3.1-6.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-3.1-6.3">cleartext_credentials</dt>
+<dt id="section-3.1-6.3">
+cleartext_credentials  </dt>
           <dd style="margin-left: 1.5em" id="section-3.1-6.4">
-  OPAQUE credentials which require authentication but not secrecy.<a href="#section-3.1-6.4" class="pilcrow">¶</a>
+            <p id="section-3.1-6.4.1">OPAQUE credentials which require authentication but not secrecy.<a href="#section-3.1-6.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -1368,24 +1371,28 @@ struct {
 </pre><a href="#section-3.1-10" class="pilcrow">¶</a>
 </div>
 <span class="break"></span><dl class="dlParallel" id="section-3.1-11">
-          <dt id="section-3.1-11.1">nonce</dt>
+          <dt id="section-3.1-11.1">
+nonce  </dt>
           <dd style="margin-left: 1.5em" id="section-3.1-11.2">
-  A unique 32-byte nonce used to protect this Envelope.<a href="#section-3.1-11.2" class="pilcrow">¶</a>
+            <p id="section-3.1-11.2.1">A unique 32-byte nonce used to protect this Envelope.<a href="#section-3.1-11.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-3.1-11.3">ct</dt>
+<dt id="section-3.1-11.3">
+ct  </dt>
           <dd style="margin-left: 1.5em" id="section-3.1-11.4">
-  Encoding of encrypted and authenticated credential extensions list.<a href="#section-3.1-11.4" class="pilcrow">¶</a>
+            <p id="section-3.1-11.4.1">Encoding of encrypted and authenticated credential extensions list (<code>secret_credentials</code>).<a href="#section-3.1-11.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-3.1-11.5">auth_data</dt>
+<dt id="section-3.1-11.5">
+auth_data  </dt>
           <dd style="margin-left: 1.5em" id="section-3.1-11.6">
-  Encoding of an authenticated credential extensions list.<a href="#section-3.1-11.6" class="pilcrow">¶</a>
+            <p id="section-3.1-11.6.1">Encoding of an authenticated credential extensions list (<code>cleartext_credentials</code>).<a href="#section-3.1-11.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-3.1-11.7">auth_tag</dt>
+<dt id="section-3.1-11.7">
+auth_tag  </dt>
           <dd style="margin-left: 1.5em" id="section-3.1-11.8">
-  Authentication tag protecting the contents of the envelope.<a href="#section-3.1-11.8" class="pilcrow">¶</a>
+            <p id="section-3.1-11.8.1">Authentication tag protecting the contents of the envelope.<a href="#section-3.1-11.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -1411,7 +1418,7 @@ multiple users. These steps can happen offline, i.e., before the registration ph
 Once complete, the registration process proceeds as follows:<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-3.2-3">
 <pre>
- Client (idU, pwdU, skU, pkU)                 Server (skS, pkS)
+      Client (pwdU, skU, pkU)                       Server (skS, pkS)
   -----------------------------------------------------------------
    request, metadata = CreateRegistrationRequest(pwdU)
 
@@ -1446,10 +1453,10 @@ struct {
 </pre><a href="#section-3.2.1-1" class="pilcrow">¶</a>
 </div>
 <span class="break"></span><dl class="dlParallel" id="section-3.2.1-2">
-            <dt id="section-3.2.1-2.1">data</dt>
+            <dt id="section-3.2.1-2.1">
+data  </dt>
             <dd style="margin-left: 1.5em" id="section-3.2.1-2.2">
-  An encoded element in the OPRF group. See <span>[<a href="#I-D.irtf-cfrg-voprf" class="xref">I-D.irtf-cfrg-voprf</a>]</span> for a
-description of this encoding.<a href="#section-3.2.1-2.2" class="pilcrow">¶</a>
+              <p id="section-3.2.1-2.2.1">An encoded element in the OPRF group.<a href="#section-3.2.1-2.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -1461,10 +1468,10 @@ struct {
 </pre><a href="#section-3.2.1-3" class="pilcrow">¶</a>
 </div>
 <span class="break"></span><dl class="dlParallel" id="section-3.2.1-4">
-            <dt id="section-3.2.1-4.1">data_blind</dt>
+            <dt id="section-3.2.1-4.1">
+data_blind  </dt>
             <dd style="margin-left: 1.5em" id="section-3.2.1-4.2">
-  An encoded OPRF scalar element. See <span>[<a href="#I-D.irtf-cfrg-voprf" class="xref">I-D.irtf-cfrg-voprf</a>]</span> for a
-description of this encoding.<a href="#section-3.2.1-4.2" class="pilcrow">¶</a>
+              <p id="section-3.2.1-4.2.1">An encoded OPRF scalar element.<a href="#section-3.2.1-4.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -1479,15 +1486,16 @@ struct {
 </pre><a href="#section-3.2.1-5" class="pilcrow">¶</a>
 </div>
 <span class="break"></span><dl class="dlParallel" id="section-3.2.1-6">
-            <dt id="section-3.2.1-6.1">data</dt>
+            <dt id="section-3.2.1-6.1">
+data  </dt>
             <dd style="margin-left: 1.5em" id="section-3.2.1-6.2">
-  An encoded element in the OPRF group. See <span>[<a href="#I-D.irtf-cfrg-voprf" class="xref">I-D.irtf-cfrg-voprf</a>]</span> for a
-description of this encoding.<a href="#section-3.2.1-6.2" class="pilcrow">¶</a>
+              <p id="section-3.2.1-6.2.1">An encoded element in the OPRF group.<a href="#section-3.2.1-6.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-3.2.1-6.3">pkS</dt>
+<dt id="section-3.2.1-6.3">
+pkS  </dt>
             <dd style="margin-left: 1.5em" id="section-3.2.1-6.4">
-  An encoded public key that will be used for the online authenticated key exchange stage.<a href="#section-3.2.1-6.4" class="pilcrow">¶</a>
+              <p id="section-3.2.1-6.4.1">An encoded public key that will be used for the online authenticated key exchange stage.<a href="#section-3.2.1-6.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -1500,16 +1508,18 @@ struct {
 </pre><a href="#section-3.2.1-7" class="pilcrow">¶</a>
 </div>
 <span class="break"></span><dl class="dlParallel" id="section-3.2.1-8">
-            <dt id="section-3.2.1-8.1">envelope</dt>
+            <dt id="section-3.2.1-8.1">
+envelope  </dt>
             <dd style="margin-left: 1.5em" id="section-3.2.1-8.2">
-  An authenticated encoding of a Credentials structure with additional application-specific
-data.<a href="#section-3.2.1-8.2" class="pilcrow">¶</a>
+              <p id="section-3.2.1-8.2.1">An authenticated encoding of a Credentials structure with additional application-specific
+data.<a href="#section-3.2.1-8.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-3.2.1-8.3">pkU</dt>
+<dt id="section-3.2.1-8.3">
+pkU  </dt>
             <dd style="margin-left: 1.5em" id="section-3.2.1-8.4">
-  An encoded public key, matching the public key contained within the encrypted
-envelope.<a href="#section-3.2.1-8.4" class="pilcrow">¶</a>
+              <p id="section-3.2.1-8.4.1">An encoded public key, matching the public key contained within the encrypted
+envelope.<a href="#section-3.2.1-8.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -1538,10 +1548,9 @@ Output:
 
 Steps:
 1. (r, M) = Blind(pwdU)
-2. data = Serialize(M)
-3. Create RegistrationRequest request with data
-4. Create RequestMetadata metadata with Serialize(r)
-5. Output (request, metadata)
+2. Create RegistrationRequest request with M
+3. Create RequestMetadata metadata with SerializeScalar(r)
+4. Output (request, metadata)
 </pre><a href="#section-3.2.2.1-1" class="pilcrow">¶</a>
 </div>
 </section>
@@ -1571,12 +1580,10 @@ Output:
 
 Steps:
 1. (kU, _) = KeyGen()
-2. M = Deserialize(request.data)
-3. Z = Evaluate(kU, M)
-4. data = Z.encode()
-5. Create RegistrationResponse response with
-     (data, pkS, secret_credentials_list, cleartext_credentials_list)
-6. Output (response, kU)
+2. Z = Evaluate(kU, request.data)
+3. Create RegistrationResponse response with
+     (Z, pkS, secret_credentials_list, cleartext_credentials_list)
+4. Output (response, kU)
 </pre><a href="#section-3.2.2.2-1" class="pilcrow">¶</a>
 </div>
 </section>
@@ -1592,6 +1599,7 @@ FinalizeRequest(pwdU, skU, metadata, request, response)
 
 Parameters:
 - params, the MHF parameters established out of band
+- Nh, the output size of the Hash function
 
 Input:
 - pwdU, an opaque byte string containing the user's password
@@ -1605,26 +1613,25 @@ Output:
 - export_key, an additional key
 
 Steps:
-1. Z = Deserialize(response.data)
-2. N = Unblind(input.data_blind, Z)
-3. y = Finalize(pwdU, N, "OPAQUE00")
-4. rwdU = HKDF-Extract("rwdU", Harden(y, params))
-5. Create secret_credentials with CredentialExtensions matching that
+1. N = Unblind(metadata.data_blind, response.data)
+2. y = Finalize(pwdU, N, "OPAQUE00")
+3. rwdU = HKDF-Extract("rwdU", Harden(y, params))
+4. Create secret_credentials with CredentialExtensions matching that
    contained in response.secret_credentials_list
-6. Create cleartext_credentials with CredentialExtensions matching that
+5. Create cleartext_credentials with CredentialExtensions matching that
    contained in response.cleartext_credentials_list
-7. pt = SerializeExtensions(secret_credentials)
-8. nonce = random(32)
-9. pseudorandom_pad = HKDF-Expand(rwdU, concat(nonce, "Pad"), len(pt))
-10. auth_key = HKDF-Expand(rwdU, concat(nonce, "AuthKey"), Nh)
-11. export_key = HKDF-Expand(rwdU, concat(nonce, "ExportKey"), Nh)
-12. ct = xor(pt, pseudorandom_pad)
-13. auth_data = SerializeExtensions(cleartext_credentials)
-14. Create InnerEnvelope contents with (nonce, ct, auth_data)
-15. t = HMAC(auth_key, contents)
-16. Create Envelope envU with (contents, t)
-17. Create RegistrationUpload upload with envelope value (envU, pkU)
-18. Output (upload, export_key)
+6. pt = SerializeExtensions(secret_credentials)
+7. nonce = random(32)
+8. pseudorandom_pad = HKDF-Expand(rwdU, concat(nonce, "Pad"), len(pt))
+9. auth_key = HKDF-Expand(rwdU, concat(nonce, "AuthKey"), Nh)
+10. export_key = HKDF-Expand(rwdU, concat(nonce, "ExportKey"), Nh)
+11. ct = xor(pt, pseudorandom_pad)
+12. auth_data = SerializeExtensions(cleartext_credentials)
+13. Create InnerEnvelope contents with (nonce, ct, auth_data)
+14. t = HMAC(auth_key, contents)
+15. Create Envelope envU with (contents, t)
+16. Create RegistrationUpload upload with envelope value (envU, pkU)
+17. Output (upload, export_key)
 </pre><a href="#section-3.2.2.3-1" class="pilcrow">¶</a>
 </div>
 <p id="section-3.2.2.3-2">[[RFC editor: please change "OPAQUE00" to the correct RFC identifier before publication.]]<a href="#section-3.2.2.3-2" class="pilcrow">¶</a></p>
@@ -1678,14 +1685,14 @@ shared secret key.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.3-2">This section describes the message flow, encoding, and helper functions used in this stage.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-3.3-3">
 <pre>
- Client (idU, pwdU)                           Server (skS, pkS)
+       Client (pwdU)                       Server (skS, pkS, kU, envU, pkU)
   -----------------------------------------------------------------
    request, metadata = CreateCredentialRequest(pwdU)
 
                                    request
                               -----------------&gt;
 
-         (response, pkU) = CreateCredentialResponse(request)
+                response = CreateCredentialResponse(request, kU, envU, pkU)
 
                                    response
                               &lt;-----------------
@@ -1718,17 +1725,18 @@ struct {
 </pre><a href="#section-3.3.1-1" class="pilcrow">¶</a>
 </div>
 <span class="break"></span><dl class="dlParallel" id="section-3.3.1-2">
-            <dt id="section-3.3.1-2.1">id</dt>
+            <dt id="section-3.3.1-2.1">
+id  </dt>
             <dd style="margin-left: 1.5em" id="section-3.3.1-2.2">
-  An opaque string carrying the client account information, if available. If absent,
+              <p id="section-3.3.1-2.2.1">An opaque string carrying the client account information, if available. If absent,
 the server is assumed to have some way of ascertaining the client account information
-out of band.<a href="#section-3.3.1-2.2" class="pilcrow">¶</a>
+out of band.<a href="#section-3.3.1-2.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-3.3.1-2.3">data</dt>
+<dt id="section-3.3.1-2.3">
+data  </dt>
             <dd style="margin-left: 1.5em" id="section-3.3.1-2.4">
-  An encoded element in the OPRF group. See <span>[<a href="#I-D.irtf-cfrg-voprf" class="xref">I-D.irtf-cfrg-voprf</a>]</span> for a
-description of this encoding.<a href="#section-3.3.1-2.4" class="pilcrow">¶</a>
+              <p id="section-3.3.1-2.4.1">An encoded element in the OPRF group.<a href="#section-3.3.1-2.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -1741,15 +1749,16 @@ struct {
 </pre><a href="#section-3.3.1-3" class="pilcrow">¶</a>
 </div>
 <span class="break"></span><dl class="dlParallel" id="section-3.3.1-4">
-            <dt id="section-3.3.1-4.1">data</dt>
+            <dt id="section-3.3.1-4.1">
+data  </dt>
             <dd style="margin-left: 1.5em" id="section-3.3.1-4.2">
-  An encoded element in the OPRF group. See <span>[<a href="#I-D.irtf-cfrg-voprf" class="xref">I-D.irtf-cfrg-voprf</a>]</span> for a
-description of this encoding.<a href="#section-3.3.1-4.2" class="pilcrow">¶</a>
+              <p id="section-3.3.1-4.2.1">An encoded element in the OPRF group.<a href="#section-3.3.1-4.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-3.3.1-4.3">envelope</dt>
+<dt id="section-3.3.1-4.3">
+envelope  </dt>
             <dd style="margin-left: 1.5em" id="section-3.3.1-4.4">
-  An authenticated encoding of a Credentials structure.<a href="#section-3.3.1-4.4" class="pilcrow">¶</a>
+              <p id="section-3.3.1-4.4.1">An authenticated encoding of a Credentials structure.<a href="#section-3.3.1-4.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -1778,37 +1787,35 @@ Output:
 
 Steps:
 1. (r, M) = Blind(pwdU)
-2. data = Serialize(M)
-3. Create CredentialRequest request with data
-4. Create RequestMetadata metadata with Serialize(r)
-5. Output (request, metadata)
+2. Create CredentialRequest request with M
+3. Create RequestMetadata metadata with SerializeScalar(r)
+4. Output (request, metadata)
 </pre><a href="#section-3.3.2.1-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
-<div id="createcredentialresponserequest">
+<div id="createcredentialresponserequest-ku-envu-pku">
 <section id="section-3.3.2.2">
             <h5 id="name-createcredentialresponsereq">
-<a href="#section-3.3.2.2" class="section-number selfRef">3.3.2.2. </a><a href="#name-createcredentialresponsereq" class="section-name selfRef">CreateCredentialResponse(request)</a>
+<a href="#section-3.3.2.2" class="section-number selfRef">3.3.2.2. </a><a href="#name-createcredentialresponsereq" class="section-name selfRef">CreateCredentialResponse(request, kU, envU, pkU)</a>
             </h5>
 <div class="artwork art-text alignLeft" id="section-3.3.2.2-1">
 <pre>
-CreateCredentialResponse(request)
+CreateCredentialResponse(request, kU, envU, pkU)
 
 Input:
 - request, a CredentialRequest structure
+- kU, OPRF key associated with idU
+- envU, Envelope associated with idU
+- pkU, Public key associated with idU
 
 Output:
 - response, a CredentialResponse structure
-- pkU, public key of the user
 
 Steps:
-1. (kU, envU, pkU) = LookupUserRecord(request.id)
-2. M = Deserialize(request.data)
-3. Z = Evaluate(kU, M)
-4. data = Z.encode()
-5. Create CredentialResponse response with (data, envU)
-6. Output (response, pkU)
+1. Z = Evaluate(kU, request.data)
+2. Create CredentialResponse response with (Z, envU)
+3. Output response
 </pre><a href="#section-3.3.2.2-1" class="pilcrow">¶</a>
 </div>
 </section>
@@ -1824,35 +1831,35 @@ RecoverCredentials(pwdU, metadata, request, response)
 
 Parameters:
 - params, the MHF parameters established out of band
+- Nh, the output size of the Hash function
 
 Input:
 - pwdU, an opaque byte string containing the user's password
 - metadata, a RequestMetadata structure
-- request, a RegistrationRequest structure
-- response, a RegistrationResponse structure
+- request, a CredentialRequest structure
+- response, a CredentialResponse structure
 
 Output:
 - C, a Credentials structure
 - export_key, an additional key
 
 Steps:
-1. Z = Deserialize(response.data)
-2. N = Unblind(input.data_blind, Z)
-3. y = Finalize(pwdU, N, "OPAQUE00")
-4. contents = response.envelope.contents
-5. nonce = contents.nonce
-6. ct = contents.ct
-7. rwdU = HKDF-Extract("rwdU", Harden(y, params))
-8. pseudorandom_pad = HKDF-Expand(rwdU, concat(nonce, "Pad"), len(ct))
-9. auth_key = HKDF-Expand(rwdU, concat(nonce, "AuthKey"), Nh)
-10. export_key = HKDF-Expand(rwdU, concat(nonce, "ExportKey"), Nh)
-11. expected_tag = HMAC(auth_key, contents)
-12. If !ct_equal(response.envelope.auth_tag, expected_tag), raise DecryptionError
-13. pt = xor(ct, pseudorandom_pad)
-14. secret_credentials = DeserializeExtensions(pt)
-15. cleartext_credentials = DeserializeExtensions(auth_data)
-16. Create Credentials creds with (secret_credentials, cleartext_credentials)
-17. Output creds, export_key
+1. N = Unblind(metadata.data_blind, response.data)
+2. y = Finalize(pwdU, N, "OPAQUE00")
+3. contents = response.envelope.contents
+4. nonce = contents.nonce
+5. ct = contents.ct
+6. rwdU = HKDF-Extract("rwdU", Harden(y, params))
+7. pseudorandom_pad = HKDF-Expand(rwdU, concat(nonce, "Pad"), len(ct))
+8. auth_key = HKDF-Expand(rwdU, concat(nonce, "AuthKey"), Nh)
+9. export_key = HKDF-Expand(rwdU, concat(nonce, "ExportKey"), Nh)
+10. expected_tag = HMAC(auth_key, contents)
+11. If !ct_equal(response.envelope.auth_tag, expected_tag), raise DecryptionError
+12. pt = xor(ct, pseudorandom_pad)
+13. secret_credentials = DeserializeExtensions(pt)
+14. cleartext_credentials = DeserializeExtensions(auth_data)
+15. Create Credentials creds with (secret_credentials, cleartext_credentials)
+16. Output creds, export_key
 </pre><a href="#section-3.3.2.3-1" class="pilcrow">¶</a>
 </div>
 <p id="section-3.3.2.3-2">[[RFC editor: please change "OPAQUE00" to the correct RFC identifier before publication.]]<a href="#section-3.3.2.3-2" class="pilcrow">¶</a></p>
@@ -1872,7 +1879,9 @@ application-specific purposes. For example, one might expand the use of OPAQUE w
 credential-retrieval functionality that is separate from the contents of the Credentials
 structure.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <p id="section-3.4-2">The exporter_key MUST NOT be used in any way before the HMAC value in the
-envelope is validated.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+envelope is validated. As a result, there are no random-key robustness requirements
+imposed on the usage of this key. (See <span>[<a href="#PartioningOracleAttacks" class="xref">PartioningOracleAttacks</a>]</span> for more information
+about this requirement.)<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="SecIdentities">
@@ -2248,9 +2257,9 @@ as <code>epkS^eskU</code> and by servers as <code>epkU^eskS</code>.<a href="#sec
 drawn from the "base mode" variant of <span>[<a href="#I-D.irtf-cfrg-voprf" class="xref">I-D.irtf-cfrg-voprf</a>]</span>. The following OPRF
 ciphersuites supports are supported:<a href="#section-5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5-2.1">OPRF(ristretto255, SHA-256)<a href="#section-5-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-5-2.1">OPRF(ristretto255, SHA-512)<a href="#section-5-2.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-5-2.2">OPRF(decaf448, SHA-256)<a href="#section-5-2.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-5-2.2">OPRF(decaf448, SHA-512)<a href="#section-5-2.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-5-2.3">OPRF(P-256, SHA-256)<a href="#section-5-2.3" class="pilcrow">¶</a>
 </li>
@@ -2260,7 +2269,7 @@ ciphersuites supports are supported:<a href="#section-5-1" class="pilcrow">¶</a
 </li>
       </ul>
 <p id="section-5-3">The OPAQUE hash function is that which is associated with the OPRF variant.
-For the variants specified here, only SHA-512 is supported.<a href="#section-5-3" class="pilcrow">¶</a></p>
+For the variants specified here, only SHA-512 and SHA-256 are supported.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <p id="section-5-4">The OPAQUE MHFs include Argon2 <span>[<a href="#I-D.irtf-cfrg-argon2" class="xref">I-D.irtf-cfrg-argon2</a>]</span>, scrypt <span>[<a href="#RFC7914" class="xref">RFC7914</a>]</span>,
 and PBKDF2 <span>[<a href="#RFC2898" class="xref">RFC2898</a>]</span> with suitable parameter choices. These may be constant
 values or set at the time of password registration and stored at the server.
@@ -2612,6 +2621,10 @@ passwords.<a href="#section-6.8-2" class="pilcrow">¶</a></p>
 <dt id="OPAQUE">[OPAQUE]</dt>
         <dd>
 <span class="refAuthor">Jarecki, S.</span><span class="refAuthor">, Krawczyk, H.</span><span class="refAuthor">, and J. Xu</span>, <span class="refTitle">"OPAQUE: An Asymmetric PAKE Protocol Secure Against Pre-Computation Attacks"</span>, <span class="seriesInfo">Eurocrypt </span>, <time datetime="2018" class="refDate">2018</time>. </dd>
+<dd class="break"></dd>
+<dt id="PartioningOracleAttacks">[PartioningOracleAttacks]</dt>
+        <dd>
+<span class="refAuthor">Len, J.</span><span class="refAuthor">, Grubbs, P.</span><span class="refAuthor">, and T. Ristenpart</span>, <span class="refTitle">"Partitioning Oracle Attacks"</span>, <span>n.d.</span>, <span>&lt;<a href="https://eprint.iacr.org/2020/1491.pdf">https://eprint.iacr.org/2020/1491.pdf</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2898">[RFC2898]</dt>
         <dd>
