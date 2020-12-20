@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-17T00:51:56.801448+00:00",
+  "timestamp": "2020-12-20T00:53:59.662102+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -143,16 +143,24 @@
       "id": "MDU6SXNzdWU2MjAyNTQ5NTM=",
       "title": "Highlight the importance of IdU and IdS in the envelope and post-OPRF AKE",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Endpoints MUST agree on these identities (and use the right values!) for security. ",
       "createdAt": "2020-05-18T14:27:09Z",
-      "updatedAt": "2020-10-28T13:03:01Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2020-12-17T01:58:59Z",
+      "closedAt": "2020-12-17T01:58:59Z",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think this is pretty much covered now. Closing.",
+          "createdAt": "2020-12-17T01:58:59Z",
+          "updatedAt": "2020-12-17T01:58:59Z"
+        }
+      ]
     },
     {
       "number": 8,
@@ -2323,7 +2331,7 @@
       "labels": [],
       "body": "since my implementation has been prominently featured in the \"partitioning oracles paper\" i was thinking that the export_key must also only be used with key-committing AE schemes. i think this should be emphasized where export_keys are mentioned in the draft.",
       "createdAt": "2020-12-10T13:48:07Z",
-      "updatedAt": "2020-12-16T21:56:48Z",
+      "updatedAt": "2020-12-17T06:23:03Z",
       "closedAt": null,
       "comments": [
         {
@@ -2339,6 +2347,20 @@
           "body": "This is a good question but the answer is no. The export key has no special restrictions except for the remark in the {#export-usage} section: _The exporter_key MUST NOT be used in any way before the HMAC value in the envelope is validated._",
           "createdAt": "2020-12-16T21:56:48Z",
           "updatedAt": "2020-12-16T21:56:48Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks! I'll draft a PR that notes this in the Security Considerations.",
+          "createdAt": "2020-12-17T01:59:43Z",
+          "updatedAt": "2020-12-17T01:59:43Z"
+        },
+        {
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This needs to be merged with PR 101 - see comment there.",
+          "createdAt": "2020-12-17T06:23:03Z",
+          "updatedAt": "2020-12-17T06:23:03Z"
         }
       ]
     }
@@ -5813,6 +5835,80 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 101,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTQxNTUyNzM1",
+      "title": "Reference \"Partitioning Oracle Attacks\" paper.",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/101",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #100.\r\n\r\ncc @hugokraw, @stef",
+      "createdAt": "2020-12-17T02:10:12Z",
+      "updatedAt": "2020-12-19T15:28:32Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "baseRefName": "master",
+      "baseRefOid": "c4246341b42614facba070e74733cd6391a6bc80",
+      "headRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "headRefName": "caw/ref-partition-oracles",
+      "headRefOid": "03b08dbb47e07a1e91c89f841752e868d5adf52d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> In this case we would say that while the paper requires it, this specification does not (in particular, partition attacks as those described in the Julia et al paper are irrelevant to this specification).\r\n\r\nSo, to be clear, would you just drop the reference from this PR? If so, we lose a pointer to the RKR definition, which I was hoping to outsource to somewhere else. ",
+          "createdAt": "2020-12-19T15:28:32Z",
+          "updatedAt": "2020-12-19T15:28:32Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU0MzA4MTgx",
+          "commit": {
+            "abbreviatedOid": "03b08db"
+          },
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Wait with this reference. Not sure if we need to touch on this point at all as there is no key robustness requirement for this specification. At most, it could be discussed in the security considerations just because the OPAQUE paper requires it. In this case we would say that while the paper requires it, this specification does not (in particular, partition attacks as those described in the Julia et al paper are irrelevant to this specification).  ",
+          "createdAt": "2020-12-17T06:21:27Z",
+          "updatedAt": "2020-12-17T06:21:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 102,
+      "id": "MDExOlB1bGxSZXF1ZXN0NTQyNDc4ODY3",
+      "title": "Changing envelope definition to  support two fixed modes",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/102",
+      "state": "OPEN",
+      "author": "kevinlewi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See #99.\r\n\r\nThis defines two modes, `base` and `customIdentifier` for the envelope. The credentials are incorporated in the `SecretCredentials` and `CleartextCredentials` structs,\r\ndepending on the mode set by the value of `EnvelopeMode`:\r\n\r\n```\r\nenum {\r\n  base(1),\r\n  customIdentifier(2),\r\n  (255)\r\n} EnvelopeMode;\r\n```\r\n\r\nThe `base` mode defines `SecretCredentials` and `CleartextCredentials` as follows:\r\n\r\n```\r\nstruct {\r\n  opaque skU<1..2^16-1>;\r\n} SecretCredentials;\r\n\r\nstruct {\r\n  opaque pkS<1..2^16-1>;\r\n} CleartextCredentials;\r\n```\r\n\r\nThe `customIdentifier` mode defines `SecretCredentials` and `CleartextCredentials` as follows:\r\n\r\n```\r\nstruct {\r\n  opaque skU<1..2^16-1>;\r\n} SecretCredentials;\r\n\r\nstruct {\r\n  opaque pkS<1..2^16-1>;\r\n  opaque idU<0..2^16-1>;\r\n  opaque idS<0..2^16-1>;\r\n} CleartextCredentials;\r\n```\r\n\r\nThese credentials are embedded into the following `Envelope` structure with\r\nencryption and authentication.\r\n\r\n```\r\nstruct {\r\n  InnerEnvelopeMode mode;\r\n  opaque nonce[32];\r\n  opaque ct<1..2^16-1>;\r\n} InnerEnvelope;\r\n\r\nstruct {\r\n  InnerEnvelope contents;\r\n  opaque auth_tag[Nh];\r\n} Envelope;\r\n```\r\n\r\nAlso updated the `FinalizeRequest` and `RecoverCredentials` procedures accordingly. Also updated the fixed string to read `OPAQUE01` instead of `OPAQUE00`.",
+      "createdAt": "2020-12-18T11:16:37Z",
+      "updatedAt": "2020-12-18T11:16:37Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "baseRefName": "master",
+      "baseRefOid": "c4246341b42614facba070e74733cd6391a6bc80",
+      "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
+      "headRefName": "dual_mode_envelope",
+      "headRefOid": "b627ad521e48ecd10df860c9448749c59fc70249",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
