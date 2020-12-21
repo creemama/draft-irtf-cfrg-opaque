@@ -5,10 +5,10 @@
 Network Working Group                                        H. Krawczyk
 Internet-Draft                                       Algorand Foundation
 Intended status: Informational                                   K. Lewi
-Expires: 20 June 2021                                      Novi Research
+Expires: 24 June 2021                                      Novi Research
                                                                C.A. Wood
                                                               Cloudflare
-                                                        17 December 2020
+                                                        21 December 2020
 
 
                   The OPAQUE Asymmetric PAKE Protocol
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 June 2021.
+   This Internet-Draft will expire on 24 June 2021.
 
 Copyright Notice
 
@@ -89,14 +89,15 @@ Table of Contents
        4.3.2.  SIGMA key derivation
    5.  Configurations
    6.  Security Considerations
-     6.1.  Configuration Choice
-     6.2.  Static Diffie-Hellman Oracles
-     6.3.  Input validation
-     6.4.  User authentication versus Authenticated Key Exchange
-     6.5.  OPRF Hardening
-     6.6.  User and server identities
-     6.7.  User enumeration
-     6.8.  Password salt and storage implications
+     6.1.  Envelope encryption
+     6.2.  Configuration choice
+     6.3.  Static Diffie-Hellman oracles
+     6.4.  Input validation
+     6.5.  User authentication versus Authenticated Key Exchange
+     6.6.  OPRF hardening
+     6.7.  User and server identities
+     6.8.  User enumeration
+     6.9.  Password salt and storage implications
    7.  IANA Considerations
    8.  References
      8.1.  Normative References
@@ -441,7 +442,7 @@ Table of Contents
                                                 StoreUserRecord(record)
 
    Both client and server MUST validate the other party's public key
-   before use.  See Section 6.3 for more details.
+   before use.  See Section 6.4 for more details.
 
 3.2.1.  Registration messages
 
@@ -749,10 +750,7 @@ Steps:
    structure.
 
    The exporter_key MUST NOT be used in any way before the HMAC value in
-   the envelope is validated.  As a result, there are no random-key
-   robustness requirements imposed on the usage of this key.  (See
-   [PartioningOracleAttacks] for more information about this
-   requirement.)
+   the envelope is validated.
 
 3.5.  AKE Execution and Party Identities
 
@@ -913,7 +911,7 @@ Steps:
 
    *  epkU, epkS are Diffie-Hellman ephemeral public keys chosen by user
       and server, respectively, which MUST be validated to be in the
-      correct group (see Section 6.3);
+      correct group (see Section 6.4);
 
    *  transcript2 includes the concatenation of the values
       credential_request, nonceU, info1_, epkU, credential_response,
@@ -1178,7 +1176,22 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    computation attacks or presented a proof of aPAKE security (not even
    in a weak model).
 
-6.1.  Configuration Choice
+6.1.  Envelope encryption
+
+   The analysis of OPAQUE from [OPAQUE] requires the authenticated
+   encryption scheme used to produce envU to have a special property
+   called random key-robustness (or key-committing).  This specification
+   enforces this property by utilizing encrypt-then-HMAC in the
+   construction of envU.  There is no option to use another
+   authenticated-encryption scheme with this specification.  (Deviating
+   from the key-robustness requirement may open the protocol to attacks,
+   e.g., [LGR20].)  We remark that export_key for authentication or
+   encryption requires no special properties from the authentication or
+   encryption schemes as long as export_key is used only after the EnvU
+   is validated, i.e., after the HMAC in RecoverCredentials passes
+   verification.
+
+6.2.  Configuration choice
 
    Best practices regarding implementation of cryptographic schemes
    apply to OPAQUE.  Particular care needs to be given to the
@@ -1188,7 +1201,7 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    [I-D.irtf-cfrg-voprf] have detailed instantiation and implementation
    guidance.
 
-6.2.  Static Diffie-Hellman Oracles
+6.3.  Static Diffie-Hellman oracles
 
    While one can expect the practical security of the OPRF function
    (namely, the hardness of computing the function without knowing the
@@ -1218,7 +1231,7 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    twist form allows an attack with 25759 calls that reduces security by
    7 bits and one with 117223 calls that reduces security by 8.4 bits.
 
-6.3.  Input validation
+6.4.  Input validation
 
    Both client and server MUST validate the other party's public key(s)
    used for the execution of OPAQUE.  This includes the keys shared
@@ -1235,7 +1248,7 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    particular, where applicable, endpoints MUST check whether the
    Diffie-Hellman shared secret is the all-zero value and abort if so.
 
-6.4.  User authentication versus Authenticated Key Exchange
+6.5.  User authentication versus Authenticated Key Exchange
 
    OPAQUE provides PAKE (password-based authenticated key exchange)
    functionality in the client-server setting.  While in the case of
@@ -1247,14 +1260,14 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    checking a visitor's credential at the door and then leaving the door
    open for others to enter freely.
 
-6.5.  OPRF Hardening
+6.6.  OPRF hardening
 
    Hardening the output of the OPRF greatly increases the cost of an
    offline attack upon the compromise of the password file at the
    server.  Applications SHOULD select parameters that balance cost and
    complexity.
 
-6.6.  User and server identities
+6.7.  User and server identities
 
    The user identity (idU) and server identity (idS) are optional
    parameters which are left to the application to designate as monikers
@@ -1275,7 +1288,7 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    application, then simply leaving idU and idS unspecified (and using
    pkU and pkS instead) is acceptable.
 
-6.7.  User enumeration
+6.8.  User enumeration
 
    User enumeration refers to attacks where the attacker tries to learn
    whether a given user identity is registered with a server.
@@ -1329,7 +1342,7 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
    [[https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/22: Should
    this variant be documented/standardized?]]
 
-6.8.  Password salt and storage implications
+6.9.  Password salt and storage implications
 
    In OPAQUE, the OPRF key acts as the secret salt value that ensures
    the infeasibility of pre-computation attacks.  No extra salt value is
@@ -1444,14 +1457,13 @@ Ke3 = HKDF-Expand-Label(handshake_secret, "client enc", "", key_length)
               DOI 10.6028/nist.sp.800-56ar3, April 2018,
               <https://doi.org/10.6028/nist.sp.800-56ar3>.
 
+   [LGR20]    Len, J., Grubbs, P., and T. Ristenpart, "Partitioning
+              Oracle Attacks", n.d.,
+              <https://eprint.iacr.org/2020/1491.pdf>.
+
    [OPAQUE]   Jarecki, S., Krawczyk, H., and J. Xu, "OPAQUE: An
               Asymmetric PAKE Protocol Secure Against Pre-Computation
               Attacks", Eurocrypt , 2018.
-
-   [PartioningOracleAttacks]
-              Len, J., Grubbs, P., and T. Ristenpart, "Partitioning
-              Oracle Attacks", n.d.,
-              <https://eprint.iacr.org/2020/1491.pdf>.
 
    [RFC2898]  Kaliski, B., "PKCS #5: Password-Based Cryptography
               Specification Version 2.0", RFC 2898,
