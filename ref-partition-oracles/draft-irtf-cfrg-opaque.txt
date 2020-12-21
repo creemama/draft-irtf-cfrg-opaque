@@ -750,7 +750,8 @@ Steps:
    structure.
 
    The exporter_key MUST NOT be used in any way before the HMAC value in
-   the envelope is validated.
+   the envelope is validated.  See Section 6.1 for more details about
+   this requirement.
 
 3.5.  AKE Execution and Party Identities
 
