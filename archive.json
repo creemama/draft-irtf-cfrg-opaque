@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-20T00:53:59.662102+00:00",
+  "timestamp": "2020-12-22T00:56:00.974816+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -95,16 +95,24 @@
       "id": "MDU6SXNzdWU2MjAyNDkzNDk=",
       "title": "Clarify server trust",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/4",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Should we clarify how much trust we place in the server? For example, since OPAQUE stores encrypted keys in the server, and that same server has the OPRF secret key, it could in theory do a dictionary attack and recover the private key for each user. This is pretty nonsensical, but I think it does highlight that OPAQUE assumes the server is honest-but-curious, rather than entirely malicious.\r\n\r\nThis is sort of fundamental, but some folks might miss it.",
       "createdAt": "2020-05-18T14:19:58Z",
-      "updatedAt": "2020-10-28T13:03:01Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2020-12-21T16:45:52Z",
+      "closedAt": "2020-12-21T16:45:51Z",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This is already discussed in the \"Password salt and storage implications\" section. Closing.",
+          "createdAt": "2020-12-21T16:45:51Z",
+          "updatedAt": "2020-12-21T16:45:51Z"
+        }
+      ]
     },
     {
       "number": 5,
@@ -221,16 +229,24 @@
       "id": "MDU6SXNzdWU2MjI2ODU4NDg=",
       "title": "Add OPRF domain separation",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/15",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The DST might include the \"RFCXXXX\" identifier, similar to what we did for HPKE.",
       "createdAt": "2020-05-21T18:16:49Z",
-      "updatedAt": "2020-10-28T13:03:01Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2020-12-21T20:55:28Z",
+      "closedAt": "2020-12-21T20:55:27Z",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We now include \"OPAQUEXX\" in `Finalize`. Closing.",
+          "createdAt": "2020-12-21T20:55:27Z",
+          "updatedAt": "2020-12-21T20:55:27Z"
+        }
+      ]
     },
     {
       "number": 16,
@@ -1129,15 +1145,15 @@
       "id": "MDU6SXNzdWU3MjY4Njk4NTE=",
       "title": "OPRF evaluation output",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/68",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The output of `Evaluate` in the OPRF draft is an `Evaluation` object, which has both a blinded and signed element, as well as a proof. We should either adopt that type here, or make it clear in our notation that the output of `Evaluate` is just the blinded and signed element.\r\n\r\nNote that this affects what's carried in a `RequestMetadata` struct. ",
       "createdAt": "2020-10-21T21:17:15Z",
-      "updatedAt": "2020-10-28T13:03:03Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-21T17:00:15Z",
+      "closedAt": "2020-12-21T17:00:15Z",
       "comments": [
         {
           "author": "hugokraw",
@@ -1145,6 +1161,13 @@
           "body": "Aside from the specification issues, I would explicitly note (if not done yet) that we use the OPRF without proof/verifiability. Doing so would require the user to carry the g^kU value with him/her contradicting the password-only property of OPAQUE.",
           "createdAt": "2020-10-22T14:41:01Z",
           "updatedAt": "2020-10-22T14:41:01Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I clarified this with a text change right on master. Closing.",
+          "createdAt": "2020-12-21T17:00:15Z",
+          "updatedAt": "2020-12-21T17:00:15Z"
         }
       ]
     },
@@ -1726,19 +1749,19 @@
       "id": "MDU6SXNzdWU3NDMyNTE5NzE=",
       "title": "XOR-based encryption for Ke2 and Ke3 encryption keys in AKE?",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/83",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "From [the definition of Ke2 and Ke3](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L1071-L1075), the encryption keys used to encrypt the optional Einfo parameters in the AKE section, it seems like the application would need to pick an encryption algorithm for OPAQUE to use here.\r\n\r\nCan we avoid this selection and simply use an XOR-based one-time pad for encryption here (is this secure)? Thus, instead of setting key_length to be a fixed constant, it would simply be the length of Einfo2 and Einfo3.",
       "createdAt": "2020-11-15T13:00:20Z",
-      "updatedAt": "2020-11-25T20:24:29Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-21T16:46:59Z",
+      "closedAt": "2020-12-21T16:46:58Z",
       "comments": [
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "@hugokraw ^",
           "createdAt": "2020-11-15T21:51:22Z",
           "updatedAt": "2020-11-15T21:51:22Z"
@@ -1752,7 +1775,7 @@
         },
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "Thanks for the points. I think the only worry I have with specifying the encryption in this manner is that it brings additional complexity into the protocol, despite not being required for the core OPAQUE functionality. But overall I am supportive of it.\r\n\r\nI'm interested to hear what @chris-wood has to say on doing a full spec for one of the AKE protocols.",
           "createdAt": "2020-11-16T20:59:20Z",
           "updatedAt": "2020-11-16T20:59:20Z"
@@ -1766,7 +1789,7 @@
         },
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "Agreed. Is your conclusion that we could still opt for a simple XOR-based encryption scheme here (since the transcript is already mac-ed), and that we could leave a clear note in the specification stating why XOR-based encryption is OK and what would need to change if the transcript were no longer to be mac-ed?",
           "createdAt": "2020-11-18T23:14:15Z",
           "updatedAt": "2020-11-18T23:14:15Z"
@@ -1780,7 +1803,7 @@
         },
         {
           "author": "kevinlewi",
-          "authorAssociation": "CONTRIBUTOR",
+          "authorAssociation": "COLLABORATOR",
           "body": "@chris-wood ^",
           "createdAt": "2020-11-23T03:03:26Z",
           "updatedAt": "2020-11-23T03:03:26Z"
@@ -1812,6 +1835,13 @@
           "body": "Sounds good to me.",
           "createdAt": "2020-11-25T20:24:29Z",
           "updatedAt": "2020-11-25T20:24:29Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing to track a complete 3DH instantiation in #77.",
+          "createdAt": "2020-12-21T16:46:58Z",
+          "updatedAt": "2020-12-21T16:46:58Z"
         }
       ]
     },
@@ -2324,15 +2354,15 @@
       "id": "MDU6SXNzdWU3NjEyNTY1MDI=",
       "title": "export_keys also need AE with RKR",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/100",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "stef",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "since my implementation has been prominently featured in the \"partitioning oracles paper\" i was thinking that the export_key must also only be used with key-committing AE schemes. i think this should be emphasized where export_keys are mentioned in the draft.",
       "createdAt": "2020-12-10T13:48:07Z",
-      "updatedAt": "2020-12-17T06:23:03Z",
-      "closedAt": null,
+      "updatedAt": "2020-12-21T16:42:15Z",
+      "closedAt": "2020-12-21T16:42:15Z",
       "comments": [
         {
           "author": "chris-wood",
@@ -5841,24 +5871,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NTQxNTUyNzM1",
       "title": "Reference \"Partitioning Oracle Attacks\" paper.",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/101",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Closes #100.\r\n\r\ncc @hugokraw, @stef",
       "createdAt": "2020-12-17T02:10:12Z",
-      "updatedAt": "2020-12-19T15:28:32Z",
+      "updatedAt": "2020-12-21T16:42:15Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "c4246341b42614facba070e74733cd6391a6bc80",
       "headRepository": "cfrg/draft-irtf-cfrg-opaque",
       "headRefName": "caw/ref-partition-oracles",
-      "headRefOid": "03b08dbb47e07a1e91c89f841752e868d5adf52d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "baa0242e64db498dbdea171d3de227a39cdf9486",
+      "closedAt": "2020-12-21T16:42:15Z",
+      "mergedAt": "2020-12-21T16:42:15Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "d7cb97511bbfa2a55c29b44600be11d0cb5ae3cc"
+      },
       "comments": [
         {
           "author": "chris-wood",
@@ -5866,6 +5898,20 @@
           "body": "> In this case we would say that while the paper requires it, this specification does not (in particular, partition attacks as those described in the Julia et al paper are irrelevant to this specification).\r\n\r\nSo, to be clear, would you just drop the reference from this PR? If so, we lose a pointer to the RKR definition, which I was hoping to outsource to somewhere else. ",
           "createdAt": "2020-12-19T15:28:32Z",
           "updatedAt": "2020-12-19T15:28:32Z"
+        },
+        {
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think the following text in the security considerations addresses this issue.\r\n\r\nWe note that the analysis of OPAQUE from {{OPAQUE}} requires the authenticated encryption scheme used to produce envU to have a special property called random key-robustness (or key-committing). This specification enforces this property by utilizing encryption-then-hmac in the construction of envU. There is no option to use another authenticated-encryption scheme with this specification.  (Deviating from the key-robustness requirement may open the protocol to attacks, e.g., {{Len}}.) We remark that export_key for authentication and/or encryption requires no special properties from the authentication/encryption schemes as long as exporter_key is used only after the EnvU is validated (i.e., after the HMAC in RecoverCredentials passes verification).",
+          "createdAt": "2020-12-20T22:09:31Z",
+          "updatedAt": "2020-12-20T22:09:31Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "That's much better. I'll update this PR with that suggestion and then close out this issue. ",
+          "createdAt": "2020-12-21T16:34:27Z",
+          "updatedAt": "2020-12-21T16:34:27Z"
         }
       ],
       "reviews": [
@@ -5896,19 +5942,87 @@
       "labels": [],
       "body": "See #99.\r\n\r\nThis defines two modes, `base` and `customIdentifier` for the envelope. The credentials are incorporated in the `SecretCredentials` and `CleartextCredentials` structs,\r\ndepending on the mode set by the value of `EnvelopeMode`:\r\n\r\n```\r\nenum {\r\n  base(1),\r\n  customIdentifier(2),\r\n  (255)\r\n} EnvelopeMode;\r\n```\r\n\r\nThe `base` mode defines `SecretCredentials` and `CleartextCredentials` as follows:\r\n\r\n```\r\nstruct {\r\n  opaque skU<1..2^16-1>;\r\n} SecretCredentials;\r\n\r\nstruct {\r\n  opaque pkS<1..2^16-1>;\r\n} CleartextCredentials;\r\n```\r\n\r\nThe `customIdentifier` mode defines `SecretCredentials` and `CleartextCredentials` as follows:\r\n\r\n```\r\nstruct {\r\n  opaque skU<1..2^16-1>;\r\n} SecretCredentials;\r\n\r\nstruct {\r\n  opaque pkS<1..2^16-1>;\r\n  opaque idU<0..2^16-1>;\r\n  opaque idS<0..2^16-1>;\r\n} CleartextCredentials;\r\n```\r\n\r\nThese credentials are embedded into the following `Envelope` structure with\r\nencryption and authentication.\r\n\r\n```\r\nstruct {\r\n  InnerEnvelopeMode mode;\r\n  opaque nonce[32];\r\n  opaque ct<1..2^16-1>;\r\n} InnerEnvelope;\r\n\r\nstruct {\r\n  InnerEnvelope contents;\r\n  opaque auth_tag[Nh];\r\n} Envelope;\r\n```\r\n\r\nAlso updated the `FinalizeRequest` and `RecoverCredentials` procedures accordingly. Also updated the fixed string to read `OPAQUE01` instead of `OPAQUE00`.",
       "createdAt": "2020-12-18T11:16:37Z",
-      "updatedAt": "2020-12-18T11:16:37Z",
+      "updatedAt": "2020-12-21T15:27:39Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "c4246341b42614facba070e74733cd6391a6bc80",
       "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
       "headRefName": "dual_mode_envelope",
-      "headRefOid": "b627ad521e48ecd10df860c9448749c59fc70249",
+      "headRefOid": "42b3019717fee3fbc7f687b4c0ec1279de08e773",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "* I added a note in the configurations section: \"The EnvelopeMode value is defined in {{data-types}} and must also be agreed upon between the client and server.\"\r\n* Thanks, good catch. Removed!\r\n* The expectation is that idS should come from the wrapper protocol. I think it is unnecessary to include idS in `RegistrationResponse`, regardless of the mode. Therefore, I think it is unnecessary to change anything here regarding this point. What do you think?",
+          "createdAt": "2020-12-21T04:04:24Z",
+          "updatedAt": "2020-12-21T04:04:24Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> The expectation is that idS should come from the wrapper protocol. I think it is unnecessary to include idS in RegistrationResponse, regardless of the mode. Therefore, I think it is unnecessary to change anything here regarding this point. What do you think?\r\n\r\nI think that's fine, but I would make things more explicit. If the wrapper protocol provides them, then it might as well also supply them to the relevant procedures for constructing the envelope. Then we could replace this:\r\n\r\n\"Create cleartext_credentials with credentials matching those needed to construct the `CleartextCredentials` structure\"\r\n\r\nwith something like:\r\n\r\n\"Create `CleartextCredentials` structure cleartext_credentials where cleartext_credentials.idU = idU, cleartext_credentials.idS = idS, cleartext_credentials.pkS = pkS.\"",
+          "createdAt": "2020-12-21T15:27:39Z",
+          "updatedAt": "2020-12-21T15:27:39Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU2MDI3MTA3",
+          "commit": {
+            "abbreviatedOid": "b627ad5"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "I like this :) I have a couple questions that I hope we can resolve moving forward:\r\n\r\n- The mode is currently implicit in registration and login. I assume the expectation is that configurations specify the mode so that it's known to both peers. We should probably say that somewhere. I left a suggestion to include this note, but we probably ought to expand upon it in the configuration section.\r\n- The `RegistrationResponse` definition still includes a list of secret and cleartext credential types. This can be removed given that these are dependent on the mode. \r\n- Credential construction is somewhat vague in the current description, especially since idU and idS are not passed as parameters to the main registration and login routines. As an implementor, is the expectation that idS comes from the client's wrapper protocol, or is it sent from server to client as part of the registration response? (My understanding is the latter.) Since there are only two modes, we might, for example, define two mode-specific `FinalizeRequest` variants, each of which takes the appropriate parameters. (The base mode variant includes what is currently there now, whereas the custom-mode variant might also include idU (and idS depending on the answer to the previous question).)\r\n\r\nObviously, we can work on these things incrementally and merge in pieces, but I wanted to flag these questions to start.",
+          "createdAt": "2020-12-20T15:24:41Z",
+          "updatedAt": "2020-12-20T15:44:19Z",
+          "comments": [
+            {
+              "originalPosition": 114,
+              "body": "```suggestion\r\ncovering `InnerEnvelope` and `CleartextCredentials`.\r\n```",
+              "createdAt": "2020-12-20T15:24:42Z",
+              "updatedAt": "2020-12-21T04:05:22Z"
+            },
+            {
+              "originalPosition": 278,
+              "body": "```suggestion\r\nthen these values (independently) default to pkU and pkS instead.\r\n```",
+              "createdAt": "2020-12-20T15:32:58Z",
+              "updatedAt": "2020-12-21T04:05:22Z"
+            },
+            {
+              "originalPosition": 117,
+              "body": "```suggestion\r\n`SecretCredentials` and `CleartextCredentials` is described in {{finalize-request}}.\r\n\r\nThe `EnvelopeMode` value is specified as part of a configuration. \r\n```",
+              "createdAt": "2020-12-20T15:33:13Z",
+              "updatedAt": "2020-12-21T04:05:22Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU2NDYxNDAz",
+          "commit": {
+            "abbreviatedOid": "42b3019"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-21T15:27:26Z",
+          "updatedAt": "2020-12-21T15:27:27Z",
+          "comments": [
+            {
+              "originalPosition": 306,
+              "body": "This implies (to me) some sort of negotiation. Since the EnvelopeMode is already in the tuple above, I'd drop that bit:\r\n\r\n```suggestion\r\nThe EnvelopeMode value is defined in {{data-types}}.\r\n```",
+              "createdAt": "2020-12-21T15:27:26Z",
+              "updatedAt": "2020-12-21T15:27:27Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
