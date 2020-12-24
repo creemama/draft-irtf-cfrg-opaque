@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-22T00:56:00.974816+00:00",
+  "timestamp": "2020-12-24T01:01:27.606349+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -2330,7 +2330,7 @@
       "labels": [],
       "body": "This issue is related to #87 and #90, in which the complexities of the setting of the envelope have come up.\r\n\r\nOne problem I foresee happening with allowing the server to choose what parameters should be optional, [which go in secret_credentials, which go in cleartext_credentials, etc.](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L438-L442) is that it becomes cumbersome to manage exhaustive test vectors that would test all of the edge cases (combinations of these settings). And if we choose to only provide test vectors for some default setting, we run the risk of an implementation in the wild incorrectly implementing support for a non-default setting that we did not provide test vectors for.\r\n\r\nTo remedy this, one approach we could take would be to allow for only a small (maybe 2?) set of options for organizing the credentials in the envelope. Perhaps a \"base mode\" and a \"custom identifier mode\", and we could spend a single byte to dictate the mode for the envelope (similar to the VOPRF RFC with the byte representing the base mode or verifiable mode). Base mode would be some default, and \"custom identifier mode\" would support a custom idU and idS being included as secret_credentials.\r\n\r\nIf this sounds good, then now we just need to decide what modes we will support, and what each mode will look like.\r\n",
       "createdAt": "2020-12-04T01:10:53Z",
-      "updatedAt": "2020-12-10T22:42:11Z",
+      "updatedAt": "2020-12-23T11:18:41Z",
       "closedAt": null,
       "comments": [
         {
@@ -2346,6 +2346,13 @@
           "body": "I think we should allow for nil idU and idS, because it is not easy to check/enforce that idU and idS, and even if it were easily checkable, it is still an additional check that the OPAQUE implementation would have to do, which increases complexity.",
           "createdAt": "2020-12-10T22:42:11Z",
           "updatedAt": "2020-12-10T22:42:11Z"
+        },
+        {
+          "author": "bytemare",
+          "authorAssociation": "NONE",
+          "body": "Both idu and ids are used in the \"info\" / \"transcript\" (naming is not consistent) parameter in HKDF. Having them _nillable_ means the HKDF only relies on the nonces. I don't know if that's a problem.\r\n\r\nMoreover, both idu and ids are used in Sigma.",
+          "createdAt": "2020-12-23T10:23:23Z",
+          "updatedAt": "2020-12-23T11:18:41Z"
         }
       ]
     },
@@ -2393,6 +2400,38 @@
           "updatedAt": "2020-12-17T06:23:03Z"
         }
       ]
+    },
+    {
+      "number": 103,
+      "id": "MDU6SXNzdWU3NzMyOTUxNDE=",
+      "title": "Sigma-I signature algorithm specification",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/103",
+      "state": "OPEN",
+      "author": "bytemare",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hello,\r\n\r\nSigma uses signatures, for which no algorithm has been specified in the current draft.\r\n\r\nsku/pku can be generated and used independently from the ciphersuite used in the rest of the protocol and stored in the envelope. This would introduce one more parameter, and for Sigma only, if OPAQUE allows for that kind flexibility. From what I understand, the number of parameters is already a concern.\r\n\r\nHow should the Sigma signature algorithm be set or chosen ?",
+      "createdAt": "2020-12-22T22:39:11Z",
+      "updatedAt": "2020-12-22T22:39:11Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 104,
+      "id": "MDU6SXNzdWU3NzM3MDYyMTU=",
+      "title": "Specify group for AKE",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/104",
+      "state": "OPEN",
+      "author": "bytemare",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The current draft does not specify what groups can or should be used for the AKE. I first thought it was the same as for the OPRF.\r\n\r\nShould the group for the AKE be the same as for the OPRF, or is an additional parameter necessary?",
+      "createdAt": "2020-12-23T12:03:22Z",
+      "updatedAt": "2020-12-23T12:03:22Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -5942,7 +5981,7 @@
       "labels": [],
       "body": "See #99.\r\n\r\nThis defines two modes, `base` and `customIdentifier` for the envelope. The credentials are incorporated in the `SecretCredentials` and `CleartextCredentials` structs,\r\ndepending on the mode set by the value of `EnvelopeMode`:\r\n\r\n```\r\nenum {\r\n  base(1),\r\n  customIdentifier(2),\r\n  (255)\r\n} EnvelopeMode;\r\n```\r\n\r\nThe `base` mode defines `SecretCredentials` and `CleartextCredentials` as follows:\r\n\r\n```\r\nstruct {\r\n  opaque skU<1..2^16-1>;\r\n} SecretCredentials;\r\n\r\nstruct {\r\n  opaque pkS<1..2^16-1>;\r\n} CleartextCredentials;\r\n```\r\n\r\nThe `customIdentifier` mode defines `SecretCredentials` and `CleartextCredentials` as follows:\r\n\r\n```\r\nstruct {\r\n  opaque skU<1..2^16-1>;\r\n} SecretCredentials;\r\n\r\nstruct {\r\n  opaque pkS<1..2^16-1>;\r\n  opaque idU<0..2^16-1>;\r\n  opaque idS<0..2^16-1>;\r\n} CleartextCredentials;\r\n```\r\n\r\nThese credentials are embedded into the following `Envelope` structure with\r\nencryption and authentication.\r\n\r\n```\r\nstruct {\r\n  InnerEnvelopeMode mode;\r\n  opaque nonce[32];\r\n  opaque ct<1..2^16-1>;\r\n} InnerEnvelope;\r\n\r\nstruct {\r\n  InnerEnvelope contents;\r\n  opaque auth_tag[Nh];\r\n} Envelope;\r\n```\r\n\r\nAlso updated the `FinalizeRequest` and `RecoverCredentials` procedures accordingly. Also updated the fixed string to read `OPAQUE01` instead of `OPAQUE00`.",
       "createdAt": "2020-12-18T11:16:37Z",
-      "updatedAt": "2020-12-21T15:27:39Z",
+      "updatedAt": "2020-12-23T21:00:06Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "c4246341b42614facba070e74733cd6391a6bc80",
@@ -5967,6 +6006,20 @@
           "body": "> The expectation is that idS should come from the wrapper protocol. I think it is unnecessary to include idS in RegistrationResponse, regardless of the mode. Therefore, I think it is unnecessary to change anything here regarding this point. What do you think?\r\n\r\nI think that's fine, but I would make things more explicit. If the wrapper protocol provides them, then it might as well also supply them to the relevant procedures for constructing the envelope. Then we could replace this:\r\n\r\n\"Create cleartext_credentials with credentials matching those needed to construct the `CleartextCredentials` structure\"\r\n\r\nwith something like:\r\n\r\n\"Create `CleartextCredentials` structure cleartext_credentials where cleartext_credentials.idU = idU, cleartext_credentials.idS = idS, cleartext_credentials.pkS = pkS.\"",
           "createdAt": "2020-12-21T15:27:39Z",
           "updatedAt": "2020-12-21T15:27:39Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Following up on the comment above, we might simplify things by delegating the \"credential construction\" logic to the wrapper protocol, which (a) knows the mode and (b) has the relevant information (skU, idU, pkS, idS, etc). That would make the interface to `FinalizeRequest` something like so:\r\n\r\n```\r\nFinalizeRequest(pwdU, creds, blind, response)\r\n```\r\n\r\nWhere `creds` contains the `secret_credentials` and `cleartext_credentials`, already in wire format form, to use when creating the envelope. ",
+          "createdAt": "2020-12-22T19:01:10Z",
+          "updatedAt": "2020-12-22T19:01:10Z"
+        },
+        {
+          "author": "bytemare",
+          "authorAssociation": "NONE",
+          "body": "Since idu is used on both sides for the AKE info HKDF parameter, shouldn't it always be conveyed to the client?",
+          "createdAt": "2020-12-23T10:50:12Z",
+          "updatedAt": "2020-12-23T10:50:12Z"
         }
       ],
       "reviews": [
@@ -6019,6 +6072,106 @@
               "body": "This implies (to me) some sort of negotiation. Since the EnvelopeMode is already in the tuple above, I'd drop that bit:\r\n\r\n```suggestion\r\nThe EnvelopeMode value is defined in {{data-types}}.\r\n```",
               "createdAt": "2020-12-21T15:27:26Z",
               "updatedAt": "2020-12-21T15:27:27Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU3MjgzNzUz",
+          "commit": {
+            "abbreviatedOid": "42b3019"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-22T18:31:25Z",
+          "updatedAt": "2020-12-22T18:31:26Z",
+          "comments": [
+            {
+              "originalPosition": 198,
+              "body": "Unrelated: should we lift `pkU` to the wrapper protocol, too? Specifically, perhaps `FinalizeRequest` should produce an envelope and export key, and the wrapper protocol is then responsible for sending the envelope and `pkU` to the server.",
+              "createdAt": "2020-12-22T18:31:26Z",
+              "updatedAt": "2020-12-22T18:57:14Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU3Mjk4ODcw",
+          "commit": {
+            "abbreviatedOid": "42b3019"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-22T18:59:13Z",
+          "updatedAt": "2020-12-22T18:59:14Z",
+          "comments": [
+            {
+              "originalPosition": 168,
+              "body": "Also unrelated, but we can remove `request` here, as it's not used.",
+              "createdAt": "2020-12-22T18:59:13Z",
+              "updatedAt": "2020-12-22T18:59:14Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU3NzkzODUz",
+          "commit": {
+            "abbreviatedOid": "42b3019"
+          },
+          "author": "bytemare",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-23T10:53:23Z",
+          "updatedAt": "2020-12-23T10:53:24Z",
+          "comments": [
+            {
+              "originalPosition": 185,
+              "body": "If SecretCredentials is always equal to the client secret, wouldn't it be more straightforward to put `pt = Serialize(secret)` ?",
+              "createdAt": "2020-12-23T10:53:24Z",
+              "updatedAt": "2020-12-23T10:53:24Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU3Nzk1Mjg1",
+          "commit": {
+            "abbreviatedOid": "42b3019"
+          },
+          "author": "bytemare",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-23T10:56:19Z",
+          "updatedAt": "2020-12-23T10:56:19Z",
+          "comments": [
+            {
+              "originalPosition": 195,
+              "body": "If I'm not mistaken, the InnerEnvelope should also specify the InnerEnvelopeMode, doesn't it?",
+              "createdAt": "2020-12-23T10:56:19Z",
+              "updatedAt": "2020-12-23T10:56:19Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTU4MjI2NTU0",
+          "commit": {
+            "abbreviatedOid": "42b3019"
+          },
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-12-23T21:00:06Z",
+          "updatedAt": "2020-12-23T21:00:06Z",
+          "comments": [
+            {
+              "originalPosition": 168,
+              "body": "It is used in line 468:\r\n\r\n```\r\nThe full procedure for constructing `Envelope` and `InnerEnvelope` from\r\n`SecretCredentials` and `CleartextCredentials` is described in {{finalize-request}}.\r\n```",
+              "createdAt": "2020-12-23T21:00:06Z",
+              "updatedAt": "2020-12-23T21:00:06Z"
             }
           ]
         }
