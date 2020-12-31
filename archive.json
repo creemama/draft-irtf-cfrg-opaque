@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-12-27T01:01:25.650833+00:00",
+  "timestamp": "2020-12-31T01:05:19.564239+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -992,12 +992,12 @@
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/63",
       "state": "CLOSED",
       "author": "kevinlewi",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Why is it necessary to [put pkS in the CredentialResponse struct](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L788)?\r\n\r\nAccording to [this](https://github.com/cfrg/draft-irtf-cfrg-opaque/blame/master/draft-irtf-cfrg-opaque.md#L460-L464), pkS must be included within the envelope already. So, when the client parses the CredentialResponse struct, shouldn't it be able to obtain pkS from the envelope already?",
       "createdAt": "2020-10-05T01:47:20Z",
-      "updatedAt": "2020-10-26T21:45:05Z",
+      "updatedAt": "2020-12-30T04:20:11Z",
       "closedAt": "2020-10-26T21:45:05Z",
       "comments": [
         {
@@ -1020,6 +1020,13 @@
           "body": "Let's drop it. @kevinlewi, can you please prep a PR to do this?",
           "createdAt": "2020-10-21T22:35:57Z",
           "updatedAt": "2020-10-21T22:35:57Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In light of the changes made in #102, this will need to be re-introduced again.",
+          "createdAt": "2020-12-30T04:20:11Z",
+          "updatedAt": "2020-12-30T04:20:11Z"
         }
       ]
     },
@@ -5997,13 +6004,13 @@
       "labels": [],
       "body": "See #99.\r\n\r\nThis defines two modes, `base` and `customIdentifier` for the envelope. The credentials are incorporated in the `SecretCredentials` and `CleartextCredentials` structs,\r\ndepending on the mode set by the value of `EnvelopeMode`:\r\n\r\n```\r\nenum {\r\n  base(1),\r\n  customIdentifier(2),\r\n  (255)\r\n} EnvelopeMode;\r\n```\r\n\r\nThe `base` mode defines `SecretCredentials` and `CleartextCredentials` as follows:\r\n\r\n```\r\nstruct {\r\n  opaque skU<1..2^16-1>;\r\n} SecretCredentials;\r\n\r\nstruct {\r\n  opaque pkS<1..2^16-1>;\r\n} CleartextCredentials;\r\n```\r\n\r\nThe `customIdentifier` mode defines `SecretCredentials` and `CleartextCredentials` as follows:\r\n\r\n```\r\nstruct {\r\n  opaque skU<1..2^16-1>;\r\n} SecretCredentials;\r\n\r\nstruct {\r\n  opaque pkS<1..2^16-1>;\r\n  opaque idU<0..2^16-1>;\r\n  opaque idS<0..2^16-1>;\r\n} CleartextCredentials;\r\n```\r\n\r\nThese credentials are embedded into the following `Envelope` structure with\r\nencryption and authentication.\r\n\r\n```\r\nstruct {\r\n  InnerEnvelopeMode mode;\r\n  opaque nonce[32];\r\n  opaque ct<1..2^16-1>;\r\n} InnerEnvelope;\r\n\r\nstruct {\r\n  InnerEnvelope contents;\r\n  opaque auth_tag[Nh];\r\n} Envelope;\r\n```\r\n\r\nAlso updated the `FinalizeRequest` and `RecoverCredentials` procedures accordingly. Also updated the fixed string to read `OPAQUE01` instead of `OPAQUE00`.",
       "createdAt": "2020-12-18T11:16:37Z",
-      "updatedAt": "2020-12-25T03:21:00Z",
+      "updatedAt": "2020-12-30T04:26:41Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "af3cd96b76fd8aaa1bf83f290f7714973ab8e64b",
       "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
       "headRefName": "dual_mode_envelope",
-      "headRefOid": "d4db542d0c853674104902746eac8443d6802aca",
+      "headRefOid": "56a30f30e70f824e4ad9ad42497126c6103a14bd",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -6062,19 +6069,19 @@
               "originalPosition": 114,
               "body": "```suggestion\r\ncovering `InnerEnvelope` and `CleartextCredentials`.\r\n```",
               "createdAt": "2020-12-20T15:24:42Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             },
             {
               "originalPosition": 278,
               "body": "```suggestion\r\nthen these values (independently) default to pkU and pkS instead.\r\n```",
               "createdAt": "2020-12-20T15:32:58Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             },
             {
               "originalPosition": 117,
               "body": "```suggestion\r\n`SecretCredentials` and `CleartextCredentials` is described in {{finalize-request}}.\r\n\r\nThe `EnvelopeMode` value is specified as part of a configuration. \r\n```",
               "createdAt": "2020-12-20T15:33:13Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6094,7 +6101,7 @@
               "originalPosition": 306,
               "body": "This implies (to me) some sort of negotiation. Since the EnvelopeMode is already in the tuple above, I'd drop that bit:\r\n\r\n```suggestion\r\nThe EnvelopeMode value is defined in {{data-types}}.\r\n```",
               "createdAt": "2020-12-21T15:27:26Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6114,7 +6121,7 @@
               "originalPosition": 198,
               "body": "Unrelated: should we lift `pkU` to the wrapper protocol, too? Specifically, perhaps `FinalizeRequest` should produce an envelope and export key, and the wrapper protocol is then responsible for sending the envelope and `pkU` to the server.",
               "createdAt": "2020-12-22T18:31:26Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6134,7 +6141,7 @@
               "originalPosition": 168,
               "body": "Also unrelated, but we can remove `request` here, as it's not used.",
               "createdAt": "2020-12-22T18:59:13Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6154,7 +6161,7 @@
               "originalPosition": 185,
               "body": "If SecretCredentials is always equal to the client secret, wouldn't it be more straightforward to put `pt = Serialize(secret)` ?",
               "createdAt": "2020-12-23T10:53:24Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6174,7 +6181,7 @@
               "originalPosition": 195,
               "body": "If I'm not mistaken, the InnerEnvelope should also specify the InnerEnvelopeMode, doesn't it?",
               "createdAt": "2020-12-23T10:56:19Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6194,7 +6201,7 @@
               "originalPosition": 168,
               "body": "It is used in line 468:\r\n\r\n```\r\nThe full procedure for constructing `Envelope` and `InnerEnvelope` from\r\n`SecretCredentials` and `CleartextCredentials` is described in {{finalize-request}}.\r\n```",
               "createdAt": "2020-12-23T21:00:06Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6214,7 +6221,7 @@
               "originalPosition": 198,
               "body": "As discussed offline, let's address this API change separately.",
               "createdAt": "2020-12-25T03:13:01Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6234,7 +6241,7 @@
               "originalPosition": 185,
               "body": "I think it may be beneficial to keep this level of generality here in case we add support for other modes that set SecretCredentials to something else in the future. This will hopefully also coincide with the changes that will be made in #105 which will pass in a generic credentials parameter.",
               "createdAt": "2020-12-25T03:17:18Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         },
@@ -6254,7 +6261,7 @@
               "originalPosition": 195,
               "body": "Good catch, thank you! Added to parameters.",
               "createdAt": "2020-12-25T03:19:54Z",
-              "updatedAt": "2020-12-25T03:20:46Z"
+              "updatedAt": "2020-12-30T04:26:41Z"
             }
           ]
         }
